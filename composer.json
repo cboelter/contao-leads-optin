@@ -1,0 +1,49 @@
+{
+  "name": "cboelter/contao-lead-optin",
+  "description": "Opt-In functions for the contao-leads extension",
+  "keywords": [
+    "contao",
+    "leads",
+    "contao leads optin",
+    "optin"
+  ],
+  "type": "contao-module",
+  "homepage": "https://boelter.eu",
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "Christopher Bölter",
+      "email": "christopher@boelter.eu",
+      "homepage": "http://boelter.eu",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/cboelter/contao-leads-optin"
+  },
+  "require": {
+    "php": ">=5.6",
+    "contao/core": ">=3.5,<3.6-dev",
+    "contao-community-alliance/composer-plugin": "~2",
+    "terminal42/contao-leads": "~1.4"
+  },
+  "require-dev": {
+    "phpcq/all-tasks": "^1.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Boelter\\LeadsOptin": "src"
+    }
+  },
+  "extra": {
+    "contao": {
+      "sources": {
+        "contao-module": "system/modules/leads-optin"
+      }
+    },
+    "branch-alias": {
+      "dev-develop": "1.0.x-dev"
+    }
+  },
+  "minimum-stability": "dev"
+}
