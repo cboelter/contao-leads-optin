@@ -62,10 +62,13 @@ class OptIn extends \Module
         $token    = \Input::get('token');
         $database = \Database::getInstance();
         $lead     =
-            $database->prepare("SELECT * FROM tl_lead Where optin_token = ? AND optin_tstamp = ?")->limit(1)->execute(
-                $token,
-                '0'
-            );
+            $database->prepare("SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ?")
+                ->limit(1)
+                ->execute(
+                    $token,
+                    '',
+                    '0'
+                );
 
         $this->Template->errorMessage   = $this->leadOptInErrorMessage;
         $this->Template->successMessage = $this->leadOptInSuccessMessage;
