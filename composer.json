@@ -32,7 +32,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Boelter\\LeadsOptin": "src"
+      "Boelter\\LeadsOptin\\": "src"
     }
   },
   "extra": {
