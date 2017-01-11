@@ -79,7 +79,7 @@ class Lead
 
         return \Image::getHtml(
             'system/themes/default/images/' . $icon,
-            'TEST',
+            '',
             'title="' . sprintf(
                 $GLOBALS['TL_LANG']['tl_lead']['optin_label'],
                 ($row['optin_tstamp'] ? \Date::parse(

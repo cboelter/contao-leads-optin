@@ -59,7 +59,12 @@ class OptIn extends \Module
      */
     protected function compile()
     {
-        $token    = \Input::get('token');
+        $token = \Input::get('token');
+
+        if (!$token) {
+            return;
+        }
+
         $database = \Database::getInstance();
         $lead     =
             $database->prepare("SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ?")
@@ -80,6 +85,12 @@ class OptIn extends \Module
         }
 
         $form = \FormModel::findById($lead->form_id);
+
+        if (!$form) {
+            $this->Template->isError = true;
+
+            return;
+        }
 
         $set                 = array();
         $set['optin_tstamp'] = time();

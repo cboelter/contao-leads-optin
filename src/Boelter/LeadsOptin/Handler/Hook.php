@@ -62,16 +62,16 @@ class Hook
             }
         }
 
-        $formTokens = array();
-        StringUtil::flatten($formData, 'form', $formTokens);
-        unset($formTokens['form']);
+        $tokens = array();
+        StringUtil::flatten($formData, 'form', $tokens);
+        unset($tokens['form']);
 
-        $formTokens['optin_token'] = $token;
-        $formTokens['optin_url']   = $this->generateOptInUrl($token, $form);
+        $tokens['optin_token'] = $token;
+        $tokens['optin_url']   = $this->generateOptInUrl($token, $form);
 
         $objNotification = Notification::findByPk($form['leadOptInNotification']);
         if (null !== $objNotification) {
-            $objNotification->send($formTokens); // Language is optional
+            $objNotification->send($tokens);
         }
     }
 
