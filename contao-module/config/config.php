@@ -34,12 +34,12 @@ $GLOBALS['TL_HOOKS']['storeLeadsData'][] = array('Boelter\\LeadsOptin\\Handler\\
  */
 $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['leads_optin'] = array
 (
-    'leads_optin_notification' => array
+    'leads_optin_notification'         => array
     (
-        'recipients'           => array('admin_email', 'form_*', 'formconfig_*'),
-        'email_subject'        => array('form_*', 'formconfig_*', 'admin_email'),
+        'recipients'           => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_subject'        => array('lead_*', 'formconfig_*', 'admin_email'),
         'email_text'           => array(
-            'form_*',
+            'lead_*',
             'formconfig_*',
             'raw_data',
             'admin_email',
@@ -47,17 +47,37 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['leads_optin'] = array
             'optin_url',
         ),
         'email_html'           => array(
-            'form_*',
+            'lead_*',
             'formconfig_*',
             'raw_data',
             'admin_email',
             'optin_token',
             'optin_url',
         ),
-        'email_sender_name'    => array('admin_email', 'form_*', 'formconfig_*'),
-        'email_sender_address' => array('admin_email', 'form_*', 'formconfig_*'),
-        'email_recipient_cc'   => array('admin_email', 'form_*', 'formconfig_*'),
-        'email_recipient_bcc'  => array('admin_email', 'form_*', 'formconfig_*'),
-        'email_replyTo'        => array('admin_email', 'form_*', 'formconfig_*'),
+        'email_sender_name'    => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_sender_address' => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_recipient_cc'   => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_recipient_bcc'  => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_replyTo'        => array('admin_email', 'lead_*', 'formconfig_*'),
+    ),
+    'leads_optin_success_notification' => array
+    (
+        'recipients'           => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_subject'        => array('lead_*', 'formconfig_*', 'admin_email'),
+        'email_text'           => array(
+            'lead_*',
+            'formconfig_*',
+            'admin_email',
+        ),
+        'email_html'           => array(
+            'lead_*',
+            'formconfig_*',
+            'admin_email',
+        ),
+        'email_sender_name'    => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_sender_address' => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_recipient_cc'   => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_recipient_bcc'  => array('admin_email', 'lead_*', 'formconfig_*'),
+        'email_replyTo'        => array('admin_email', 'lead_*', 'formconfig_*'),
     ),
 );

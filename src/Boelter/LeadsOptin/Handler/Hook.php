@@ -63,7 +63,7 @@ class Hook
         }
 
         $tokens = array();
-        StringUtil::flatten($formData, 'form', $tokens);
+        StringUtil::flatten($formData, 'lead', $tokens);
         unset($tokens['form']);
 
         $tokens['optin_token'] = $token;

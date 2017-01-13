@@ -16,4 +16,4 @@
  * Frontend-Modules
  */
 $GLOBALS['TL_LANG']['FMD']['leads']      = 'Anfragen speichern';
-$GLOBALS['TL_LANG']['FMD']['leadsoptin'] = 'OptIn Verarbeitung';
+$GLOBALS['TL_LANG']['FMD']['leadsoptin'][0] = 'OptIn Verarbeitung';

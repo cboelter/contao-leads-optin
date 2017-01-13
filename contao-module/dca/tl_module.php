@@ -17,7 +17,7 @@
  */
 $GLOBALS['TL_DCA']['tl_module']['metapalettes']['leadsoptin'] = array(
     'type'       => array('name', 'headline', 'type'),
-    'leadsoptin' => array('leadOptInSuccessMessage', 'leadOptInErrorMessage'),
+    'leadsoptin' => array('leadOptInSuccessMessage', 'leadOptInErrorMessage', 'leadOptInSuccessNotification'),
     'template'   => array(':hide', 'customTpl'),
     'protected'  => array(':hide', 'protected'),
     'expert'     => array(':hide', 'guests', 'cssID', 'space'),
@@ -42,4 +42,14 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInErrorMessage'] = array
     'inputType' => 'textarea',
     'eval'      => array('tl_class' => 'long', 'rte' => 'tinyMCE'),
     'sql'       => "text NOT NULL",
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessNotification'] = array
+(
+    'label'            => &$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessNotification'],
+    'exclude'          => true,
+    'inputType'        => 'select',
+    'options_callback' => array('Boelter\\LeadsOptin\\Dca\\Module', 'getNotifications'),
+    'eval'             => array('tl_class' => 'w50 m12', 'includeBlankOption' => true, 'mandatory' => true),
+    'sql'              => "int(10) unsigned NOT NULL default '0'",
 );

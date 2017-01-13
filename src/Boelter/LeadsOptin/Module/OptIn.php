@@ -14,6 +14,9 @@
 
 namespace Boelter\LeadsOptin\Module;
 
+use Haste\Util\StringUtil;
+use NotificationCenter\Model\Notification;
+
 /**
  * Provides the frontend module to handle the optin process.
  *
@@ -75,8 +78,7 @@ class OptIn extends \Module
                     '0'
                 );
 
-        $this->Template->errorMessage   = $this->leadOptInErrorMessage;
-        $this->Template->successMessage = $this->leadOptInSuccessMessage;
+        $this->Template->errorMessage = $this->leadOptInErrorMessage;
 
         if ($lead->numRows == 0) {
             $this->Template->isError = true;
@@ -113,5 +115,27 @@ class OptIn extends \Module
 
             return;
         }
+
+        $tokens     = array();
+        $formConfig = $form->row();
+        StringUtil::flatten($formConfig, 'formconfig', $tokens);
+
+        $tokens['lead_created'] = \Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $lead->created);
+        $tokens['optin_tstamp'] =
+            ($set['optin_tstamp'] ? \Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $set['optin_tstamp']) : '');
+        $leadData               =
+            \Database::getInstance()->prepare("SELECT * FROM tl_lead_data WHERE pid=?")->execute($lead->id);
+
+        while ($leadData->next()) {
+            StringUtil::flatten(deserialize($leadData->value), 'lead_' . $leadData->name, $tokens);
+        }
+
+        $objNotification = Notification::findByPk($this->leadOptInSuccessNotification);
+        if (null !== $objNotification) {
+            $objNotification->send($tokens);
+        }
+
+        $this->Template->successMessage =
+            StringUtil::recursiveReplaceTokensAndTags($this->leadOptInSuccessMessage, $tokens);
     }
 }
