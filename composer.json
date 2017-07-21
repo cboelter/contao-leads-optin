@@ -26,7 +26,8 @@
     "contao/core": ">=3.5,<3.6-dev",
     "contao-community-alliance/composer-plugin": "~2",
     "terminal42/contao-leads": "~1.4",
-    "terminal42/notification_center": "~1.3"
+    "terminal42/notification_center": "~1.3",
+    "contao-community-alliance/meta-palettes": "~1.7"
   },
   "require-dev": {
     "phpcq/all-tasks": "^1.1"
