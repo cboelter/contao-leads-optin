@@ -56,7 +56,6 @@ class OptIn extends \Module
         return parent::generate();
     }
 
-
     /**
      * generate the module itself and handle the optin process.
      */

@@ -72,21 +72,28 @@ class Lead
      */
     public function showOptInState($row, $href, $label, $title, $icon, $attributes)
     {
+        $iconPath = 'system/themes/default/images/';
+
         if (!$row['optin_tstamp']) {
             $iconName = explode('.', $icon);
-            $icon     = $iconName[0] . '_.' . $iconName[1];
+            $icon     = $iconName[0].'_.'.$iconName[1];
+        }
+
+        if (version_compare(VERSION, '4.0', '>=')) {
+            $icon     = str_replace('.gif', '.svg', $icon);
+            $iconPath = 'system/themes/flexible/icons/';
         }
 
         return \Image::getHtml(
-            'system/themes/default/images/' . $icon,
+            $iconPath.$icon,
             '',
-            'title="' . sprintf(
+            'title="'.sprintf(
                 $GLOBALS['TL_LANG']['tl_lead']['optin_label'],
                 ($row['optin_tstamp'] ? \Date::parse(
                     $GLOBALS['TL_CONFIG']['datimFormat'],
                     $row['optin_tstamp']
                 ) : '')
-            ) . '"'
+            ).'"'
         );
     }
 }
