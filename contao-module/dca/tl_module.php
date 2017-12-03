@@ -50,6 +50,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessNotification'] = arra
     'exclude'          => true,
     'inputType'        => 'select',
     'options_callback' => array('Boelter\\LeadsOptin\\Dca\\Module', 'getNotifications'),
-    'eval'             => array('tl_class' => 'w50 m12', 'includeBlankOption' => true, 'mandatory' => true),
+    'eval'             => array('tl_class' => 'w50 m12', 'includeBlankOption' => true, 'mandatory' => false),
     'sql'              => "int(10) unsigned NOT NULL default '0'",
 );
