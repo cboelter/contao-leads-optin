@@ -14,6 +14,8 @@
 
 namespace Boelter\LeadsOptin\Handler;
 
+use Contao\Controller;
+use Contao\Environment;
 use Haste\Util\StringUtil;
 use NotificationCenter\Model\Notification;
 
@@ -91,7 +93,7 @@ class Hook
             $page = \PageModel::findWithDetails($form['leadOptInTarget']);
         }
 
-        $url       = \Environment::get('base') . \Controller::generateFrontendUrl($page->row());
+        $url       = Environment::get('base') . Controller::generateFrontendUrl($page->row());
         $parameter = '?token=' . $token;
 
         return $url . $parameter;
