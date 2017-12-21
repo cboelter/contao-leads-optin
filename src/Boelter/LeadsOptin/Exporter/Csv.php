@@ -75,8 +75,7 @@ class Csv extends \Leads\Exporter\Csv
         $this->updateLastRun($config);
 
         $objFile = new \File($writer->getFilename());
-        echo $objFile->getContent();
-        exit;
+        $objFile->sendToBrowser();
     }
 
     /**
