@@ -14,6 +14,7 @@
 
 namespace Boelter\LeadsOptin\Module;
 
+use Contao\Module;
 use Haste\Util\StringUtil;
 use NotificationCenter\Model\Notification;
 
@@ -22,7 +23,7 @@ use NotificationCenter\Model\Notification;
  *
  * @package Boelter\LeadsOptin\Module
  */
-class OptIn extends \Module
+class OptIn extends Module
 {
 
     /**
@@ -31,7 +32,6 @@ class OptIn extends \Module
      * @var string
      */
     protected $strTemplate = 'mod_leads_optin';
-
 
     /**
      * Display a wildcard in the back end

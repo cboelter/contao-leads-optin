@@ -25,3 +25,9 @@ $GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessMessage'] =
 
 $GLOBALS['TL_LANG']['tl_module']['leadOptInErrorMessage'] =
     array('OptIn Fehler', 'Füllen Sie dieses Feld aus, um dem Benutzer eine Information über einen Fehler zu geben');
+
+$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessNotification'] =
+    array(
+        'OptIn Erfolgreich Benachrichtigung',
+        'Wählen Sie eine Benachrichtigung aus, um dem Benutzer den Erfolg des OptIn zu bestätigen',
+    );

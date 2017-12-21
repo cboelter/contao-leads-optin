@@ -15,13 +15,8 @@
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_module']['metapalettes']['leadsoptin'] = array(
-    'type'       => array('name', 'headline', 'type'),
-    'leadsoptin' => array('leadOptInSuccessMessage', 'leadOptInErrorMessage', 'leadOptInSuccessNotification'),
-    'template'   => array(':hide', 'customTpl'),
-    'protected'  => array(':hide', 'protected'),
-    'expert'     => array(':hide', 'guests', 'cssID', 'space'),
-);
+$GLOBALS['TL_DCA']['tl_module']['palettes']['leadsoptin'] =
+    '{title_legend},name,headline,type;{leadsoptin_legend},leadOptInSuccessMessage,leadOptInErrorMessage,leadOptInSuccessNotification;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 /**
  * Fields
