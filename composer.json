@@ -26,8 +26,7 @@
     "contao/core-bundle": "^3.5 || ^4.1",
     "contao-community-alliance/composer-plugin": "^2.4 || ^3.0",
     "terminal42/contao-leads": "~1.4",
-    "terminal42/notification_center": "~1.4",
-    "contao-community-alliance/meta-palettes": "~1.10"
+    "terminal42/notification_center": "~1.4"
   },
   "require-dev": {
     "phpcq/all-tasks": "^1.1"
@@ -46,6 +45,5 @@
     "branch-alias": {
       "dev-develop": "1.0.x-dev"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
