@@ -17,7 +17,7 @@
  */
 array_insert(
     $GLOBALS['FE_MOD']['leads'],
-    (count($GLOBALS['FE_MOD']['leads']) - 1),
+    (is_array($GLOBALS['FE_MOD']['leads']) ? count($GLOBALS['FE_MOD']['leads']) - 1 : 0),
     array
     (
         'leadsoptin' => 'Boelter\\LeadsOptin\\Module\\OptIn',
