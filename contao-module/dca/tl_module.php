@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessMessage'] = array
     'exclude'   => true,
     'inputType' => 'textarea',
     'eval'      => array('tl_class' => 'long', 'rte' => 'tinyMCE'),
-    'sql'       => "text NOT NULL",
+    'sql'       => "text NULL",
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInErrorMessage'] = array
@@ -36,7 +36,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInErrorMessage'] = array
     'exclude'   => true,
     'inputType' => 'textarea',
     'eval'      => array('tl_class' => 'long', 'rte' => 'tinyMCE'),
-    'sql'       => "text NOT NULL",
+    'sql'       => "text NULL",
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessNotification'] = array
