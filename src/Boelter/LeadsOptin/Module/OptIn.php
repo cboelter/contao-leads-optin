@@ -15,8 +15,10 @@
 namespace Boelter\LeadsOptin\Module;
 
 use Contao\Module;
+use Haste\Form\Form;
 use Haste\Util\StringUtil;
 use NotificationCenter\Model\Notification;
+use Patchwork\Utf8;
 
 /**
  * Provides the frontend module to handle the optin process.
@@ -44,7 +46,7 @@ class OptIn extends Module
             $objTemplate = new \BackendTemplate('be_wildcard');
 
             $objTemplate->wildcard =
-                '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['leadsoptin'][0]) . ' ###';
+                '### ' . Utf8::strtoupper($GLOBALS['TL_LANG']['FMD']['leadsoptin'][0]) . ' ###';
             $objTemplate->title    = $this->headline;
             $objTemplate->id       = $this->id;
             $objTemplate->link     = $this->name;
@@ -91,6 +93,33 @@ class OptIn extends Module
             $this->Template->isError = true;
 
             return;
+        }
+
+        // check if we need to generate a form to confirm a real user uses the optIn link
+        if ($this->leadOptIndNeedsUserInteraction) {
+
+            $tokenForm = new Form('someid', 'POST', function($objHaste) {
+                return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
+            });
+
+            $tokenForm->addFormField('mandatory', array(
+                'inputType' => 'explanation',
+                'eval' => array('text' => $this->leadOptInUserInteractionMessage)
+            ));
+
+            // Let's add  a submit button
+            $tokenForm->addFormField('submit', array(
+                'label'     => $this->leadOptInUserInteractionSubmit,
+                'inputType' => 'submit'
+            ));
+
+            // validate() also checks whether the form has been submitted
+            if (!$tokenForm->validate()) {
+                // for was not submitted, so ist has to be shown
+                $this->Template->showTokenForm  = true;
+                $this->Template->tokenForm      = $tokenForm->generate();
+                return;
+            }
         }
 
         $set                 = array();

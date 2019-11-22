@@ -31,3 +31,12 @@ $GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessNotification'] =
         'OptIn Erfolgreich Benachrichtigung',
         'Wählen Sie eine Benachrichtigung aus, um dem Benutzer den Erfolg des OptIn zu bestätigen',
     );
+
+$GLOBALS['TL_LANG']['tl_module']['leadOptIndNeedsUserInteraction'] =
+    array('Benutzeraktion erforderlich', 'Wahlen Sie dieses Feld aus, damit der User das OptIn noch einmal bestätigen muss.');
+
+$GLOBALS['TL_LANG']['tl_module']['leadOptInUserInteractionMessage'] =
+    array('Bestätigungstext', 'Füllen Sie dieses Feld aus, um dem Benutzer eine Information zur erneuten Bestätigung zu geben.');
+
+$GLOBALS['TL_LANG']['tl_module']['leadOptInUserInteractionSubmit'] =
+    array('Bestätigungsfeld', 'Geben Sie hier den TExt für den Bestätigungs-Button an.');
