@@ -16,16 +16,31 @@
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['leadsoptin'] =
-    '{title_legend},name,headline,type;{leadsoptin_legend},leadOptInSuccessMessage,leadOptInErrorMessage,leadOptInSuccessNotification,leadOptIndNeedsUserInteraction;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+    '{title_legend},name,headline,type;{leadsoptin_legend},leadOptInSuccessType,leadOptInErrorMessage,leadOptInSuccessNotification,leadOptIndNeedsUserInteraction;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'leadOptInSuccessType';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'leadOptIndNeedsUserInteraction';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['leadOptIndNeedsUserInteraction'] =
     'leadOptInUserInteractionMessage,leadOptInUserInteractionSubmit';
 
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['leadOptInSuccessType_message'] = 'leadOptInSuccessMessage';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['leadOptInSuccessType_redirect'] = 'leadOptInSuccessJumpTo';
+
 /**
  * Fields
  */
+$GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessType'] = array
+(
+    'label'      => &$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessType'],
+    'exclude'    => true,
+    'inputType'  => 'select',
+    'options'    => ['message', 'redirect'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval'       => array('tl_class' => 'w50', 'submitOnChange' => true),
+    'sql'        => "varchar(8) COLLATE utf8_bin NOT NULL default 'message'",
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessMessage'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessMessage'],
@@ -35,12 +50,22 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessMessage'] = array
     'sql'       => "text NULL",
 );
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessJumpTo'] = array
+(
+    'label'      => &$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessJumpTo'],
+    'exclude'    => true,
+    'inputType'  => 'pageTree',
+    'foreignKey' => 'tl_page.title',
+    'eval'       => array('fieldType' => 'radio', 'tl_class' => 'clr'),
+    'sql'        => "int(10) unsigned NOT NULL default 0",
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInErrorMessage'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_module']['leadOptInErrorMessage'],
     'exclude'   => true,
     'inputType' => 'textarea',
-    'eval'      => array('tl_class' => 'long', 'rte' => 'tinyMCE'),
+    'eval'      => array('tl_class' => 'clr long', 'rte' => 'tinyMCE'),
     'sql'       => "text NULL",
 );
 
@@ -74,9 +99,9 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInUserInteractionMessage'] = a
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInUserInteractionSubmit'] = array
 (
-    'label'                   => &$GLOBALS['TL_LANG']['tl_module']['leadOptInUserInteractionSubmit'],
-    'exclude'                 => true,
-    'inputType'               => 'text',
-    'eval'                    => array('tl_class'=>'w50'),
-    'sql'                     => "varchar(128) COLLATE utf8_bin NOT NULL default ''"
+    'label'     => &$GLOBALS['TL_LANG']['tl_module']['leadOptInUserInteractionSubmit'],
+    'exclude'   => true,
+    'inputType' => 'text',
+    'eval'      => array('tl_class' => 'w50'),
+    'sql'       => "varchar(128) COLLATE utf8_bin NOT NULL default ''",
 );
