@@ -20,8 +20,14 @@ $GLOBALS['TL_LANG']['tl_module']['leadsoptin_legend'] = 'Anfragen speichern OptI
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessType'] =
+        array('OptIn Bestätigung Typ', 'Bitte wählen Sie welche Art von Bestätigung verwendet werden soll');
+
 $GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessMessage'] =
-    array('OptIn Bestätigung', 'Füllen Sie dieses Feld aus, um dem Benutzer eine Bestätigung zu geben');
+    array('OptIn Bestätigung Text', 'Füllen Sie dieses Feld aus, um dem Benutzer eine Bestätigung zu geben');
+
+$GLOBALS['TL_LANG']['tl_module']['leadOptInSuccessJumpTo'] =
+    array('OptIn Bestätigung Weiterleitung', 'Füllen Sie dieses Feld aus, um den Benutzer zur Bestätigung auf eine Seite zu leiten');
 
 $GLOBALS['TL_LANG']['tl_module']['leadOptInErrorMessage'] =
     array('OptIn Fehler', 'Füllen Sie dieses Feld aus, um dem Benutzer eine Information über einen Fehler zu geben');
@@ -40,3 +46,9 @@ $GLOBALS['TL_LANG']['tl_module']['leadOptInUserInteractionMessage'] =
 
 $GLOBALS['TL_LANG']['tl_module']['leadOptInUserInteractionSubmit'] =
     array('Bestätigungsfeld', 'Geben Sie hier den TExt für den Bestätigungs-Button an.');
+
+/**
+ * References
+ */
+$GLOBALS['TL_LANG']['tl_module']['message'] = 'Text';
+$GLOBALS['TL_LANG']['tl_module']['redirect'] = 'Weiterleitung';

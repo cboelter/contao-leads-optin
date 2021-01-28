@@ -14,6 +14,7 @@
 
 namespace Boelter\LeadsOptin\Module;
 
+use Contao\Controller;
 use Contao\Module;
 use Haste\Form\Form;
 use Haste\Util\StringUtil;
@@ -98,7 +99,7 @@ class OptIn extends Module
         // check if we need to generate a form to confirm a real user uses the optIn link
         if ($this->leadOptIndNeedsUserInteraction) {
 
-            $tokenForm = new Form('someid', 'POST', function($objHaste) {
+            $tokenForm = new Form('optin-check', 'POST', function($objHaste) {
                 return \Input::post('FORM_SUBMIT') === $objHaste->getFormId();
             });
 
@@ -161,6 +162,14 @@ class OptIn extends Module
         $objNotification = Notification::findByPk($this->leadOptInSuccessNotification);
         if (null !== $objNotification) {
             $objNotification->send($tokens);
+        }
+
+        if($this->leadOptInSuccessType == 'redirect' && $this->leadOptInSuccessJumpTo != 0) {
+            $page = \PageModel::findWithDetails($this->leadOptInSuccessJumpTo);
+
+            if($page) {
+                Controller::redirect(Controller::generateFrontendUrl($page->row()));
+            }
         }
 
         $this->Template->successMessage =
