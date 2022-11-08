@@ -1,0 +1,9 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_lead.php" source-language="en">
+    <body>
+      <trans-unit id="tl_lead.optin_label">
+        <source>Opt-in date: %s</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
