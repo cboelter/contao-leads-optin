@@ -3,7 +3,7 @@
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
- * PHP version 5
+ * PHP version ^7.4 || ^8.0
  *
  * @package    LeadsOptin
  * @author     Christopher Bölter <kontakt@boelter.eu>
@@ -14,6 +14,7 @@
 
 namespace Boelter\LeadsOptin\Exporter;
 
+use Contao\Database;
 use Leads\DataCollector;
 
 class OptInDataCollector extends DataCollector
@@ -23,7 +24,7 @@ class OptInDataCollector extends DataCollector
      *
      * @var array
      */
-    private $getExportDataCache = array();
+    private $getExportDataCache = [];
 
     /**
      * Fetches the export (tl_lead_data) data. Use setLeadDataIds() if you want to limit the
@@ -39,22 +40,25 @@ class OptInDataCollector extends DataCollector
             return $this->getExportDataCache[$cacheKey];
         }
 
-        $where = array('tl_lead.master_id=?');
+        $where = ['tl_lead.master_id=?'];
 
-        if (0 !== count($this->getLeadDataIds())) {
+        if (0 !== count($this->getLeadDataIds()))
+        {
             $where[] = 'tl_lead.id IN('.implode(',', $this->getLeadDataIds()).')';
         }
 
-        if (null !== $this->getFrom()) {
+        if (null !== $this->getFrom())
+        {
             $where[] = 'tl_lead.created >= '.$this->getFrom();
         }
 
-        if (null !== $this->getTo()) {
+        if (null !== $this->getTo())
+        {
             $where[] = 'tl_lead.created <= '.$this->getTo();
         }
 
-        $data = array();
-        $db   = \Database::getInstance()->prepare(
+        $data = [];
+        $db   = Database::getInstance()->prepare(
             "
             SELECT
                 tl_lead_data.*,
@@ -73,7 +77,8 @@ class OptInDataCollector extends DataCollector
         "
         )->execute($this->getFormId());
 
-        while ($db->next()) {
+        while ($db->next())
+        {
             $data[$db->pid][$db->field_id] = $db->row();
         }
 

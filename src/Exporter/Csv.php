@@ -3,7 +3,7 @@
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
- * PHP version 5
+ * PHP version ^7.4 || ^8.0
  *
  * @package    LeadsOptin
  * @author     Christopher Bölter <kontakt@boelter.eu>
@@ -14,6 +14,7 @@
 
 namespace Boelter\LeadsOptin\Exporter;
 
+use Contao\Date;
 use Contao\System;
 use Haste\IO\Reader\ArrayReader;
 use Haste\IO\Writer\CsvFileWriter;
@@ -45,10 +46,12 @@ class Csv extends \Leads\Exporter\Csv
         $optInFields = $this->getOptInFields();
 
         // Add header fields
-        if ($config->headerFields) {
+        if ($config->headerFields)
+        {
             $headerFields = $this->prepareDefaultHeaderFields($config, $dataCollector);
 
-            foreach ($optInFields as $field) {
+            foreach ($optInFields as $field)
+            {
                 $headerFields[] = $field['name'];
             }
 
@@ -58,23 +61,22 @@ class Csv extends \Leads\Exporter\Csv
 
         $exportConfig = $this->prepareDefaultExportConfig($config, $dataCollector);
 
-        foreach ($optInFields as $field => $config) {
+        foreach ($optInFields as $field => $config)
+        {
             $exportConfig[] = $config;
         }
 
         $row = new Row($config, $exportConfig);
 
-        $writer->setRowCallback(
-            function ($data) use ($row) {
-                return $row->compile($data);
-            }
-        );
+        $writer->setRowCallback(function($data) use ($row) {
+            return $row->compile($data);
+        });
 
         $this->handleDefaultExportResult($writer->writeFrom($reader));
 
         $this->updateLastRun($config);
 
-        $objFile = new \File($writer->getFilename());
+        $objFile = new \Contao\File($writer->getFilename());
         $objFile->sendToBrowser();
     }
 
@@ -90,13 +92,15 @@ class Csv extends \Leads\Exporter\Csv
     {
         $dataCollector = new OptInDataCollector($config->master);
 
-        if (null !== $ids) {
+        if (null !== $ids)
+        {
             $dataCollector->setLeadDataIds($ids);
         }
 
-        $this->newLastRun = \Date::floorToMinute();
+        $this->newLastRun = Date::floorToMinute();
 
-        if ($config->skipLastRun) {
+        if ($config->skipLastRun)
+        {
             $dataCollector->setFrom($config->lastRun);
             $dataCollector->setTo($this->newLastRun - 1);
         }
@@ -108,26 +112,26 @@ class Csv extends \Leads\Exporter\Csv
     {
         System::loadLanguageFile('tl_lead_export');
 
-        return array(
-            'optin_token'  => array(
+        return [
+            'optin_token'  => [
                 'field'       => 'optin_token',
                 'name'        => $GLOBALS['TL_LANG']['tl_lead_export']['optin_token'],
                 'value'       => 'value',
                 'valueColRef' => 'optin_token',
-            ),
-            'optin_tstamp' => array(
+            ],
+            'optin_tstamp' => [
                 'field'       => 'optin_tstamp',
                 'name'        => $GLOBALS['TL_LANG']['tl_lead_export']['optin_tstamp'],
                 'format'      => 'datim',
                 'value'       => 'value',
                 'valueColRef' => 'optin_tstamp',
-            ),
-            'optin_ip'     => array(
+            ],
+            'optin_ip'     => [
                 'field'       => 'optin_ip',
                 'name'        => $GLOBALS['TL_LANG']['tl_lead_export']['optin_ip'],
                 'value'       => 'value',
                 'valueColRef' => 'optin_ip',
-            ),
-        );
+            ],
+        ];
     }
 }
