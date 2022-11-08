@@ -3,7 +3,7 @@
 <?php $this->block('content'); ?>
 
 <?php if($this->isError): ?>
-<?= $this->errorMessage; ?>
+    <?= $this->errorMessage; ?>
 <?php endif; ?>
 
 <?php if($this->showTokenForm && !$this->isError): ?>
@@ -11,7 +11,7 @@
 <?php endif; ?>
 
 <?php if(!$this->isError): ?>
-<?= $this->successMessage; ?>
+    <?= $this->successMessage; ?>
 <?php endif; ?>
 
 <?php $this->endblock(); ?>
