@@ -3,7 +3,7 @@
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
- * PHP version 5
+ * PHP version ^7.4 || ^8.0
  *
  * @package    LeadsOptin
  * @author     Christopher Bölter <kontakt@boelter.eu>
@@ -12,8 +12,6 @@
  * @filesource
  */
 
-/**
- * Palettes
- */
+// Palettes
 $GLOBALS['TL_DCA']['tl_lead_export']['palettes']['optinCsv'] =
     '{name_legend},name,type,filename;{config_legend},headerFields;{date_legend:hide},lastRun,skipLastRun';

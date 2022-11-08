@@ -3,7 +3,7 @@
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
- * PHP version 5
+ * PHP version ^7.4 || ^8.0
  *
  * @package    LeadsOptin
  * @author     Christopher Bölter <kontakt@boelter.eu>
@@ -14,8 +14,10 @@
 
 namespace Boelter\LeadsOptin\Dca;
 
+use Contao\Database;
+
 /**
- * Provides serveral helpers for handling callbacks and form related data.
+ * Provides several helpers for handling callbacks and form related data.
  *
  * @package Boelter\LeadsOptin\Dca
  */
@@ -26,7 +28,7 @@ class Form
      *
      * @param $dc
      */
-    public function updatePalette($dc)
+    public function updatePalette($dc): void
     {
         $GLOBALS['TL_DCA']['tl_form']['palettes']['default'] =
             str_replace(
@@ -38,18 +40,17 @@ class Form
 
     /**
      * Get all notifications for the optin.
-     *
-     * @return array
      */
-    public function getNotifications()
+    public function getNotifications(): array
     {
-        $notificationOptions = array();
-        $database            = \Database::getInstance();
+        $notificationOptions = [];
+        $database            = Database::getInstance();
         $notifications       = $database->execute(
             "SELECT id,title FROM tl_nc_notification WHERE type='leads_optin_notification' ORDER BY title"
         );
 
-        while ($notifications->next()) {
+        while ($notifications->next())
+        {
             $notificationOptions[$notifications->id] = $notifications->title;
         }
 
