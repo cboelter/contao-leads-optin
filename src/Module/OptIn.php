@@ -14,6 +14,7 @@
 
 namespace Boelter\LeadsOptin\Module;
 
+use Boelter\LeadsOptin\Notification\OptinMessage;
 use Contao\BackendTemplate;
 use Contao\Controller;
 use Contao\Database;
@@ -175,7 +176,7 @@ class OptIn extends Module
 
         if (null !== ($objNotification = Notification::findByPk($this->leadOptInSuccessNotification)))
         {
-            $objNotification->send($tokens);
+            (new OptinMessage)->send($objNotification, $tokens);
         }
 
         if (
