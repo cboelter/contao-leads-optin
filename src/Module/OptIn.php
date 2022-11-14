@@ -75,10 +75,11 @@ class OptIn extends Module
     protected function compile()
     {
         $token = Input::get('token');
+        $this->Template->errorMessage = $this->leadOptInErrorMessage;
 
         if (!$token)
         {
-            return null;
+            return $this->Template->isError = true;
         }
 
         $database = Database::getInstance();
@@ -86,8 +87,6 @@ class OptIn extends Module
         $lead = $database->prepare("SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ?")
             ->limit(1)
             ->execute($token, '', '0');
-
-        $this->Template->errorMessage = $this->leadOptInErrorMessage;
 
         if (0 === $lead->numRows || null === ($form = FormModel::findById($lead->form_id)))
         {
