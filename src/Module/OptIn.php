@@ -164,11 +164,11 @@ class OptIn extends Module
             {
                 if (is_array($callback))
                 {
-                    System::importStatic($callback[0])->{$callback[1]}($leadData, $tokens);
+                    System::importStatic($callback[0])->{$callback[1]}($leadData, $tokens, $this);
                 }
                 elseif (is_callable($callback))
                 {
-                    $callback($leadData, $tokens);
+                    $callback($leadData, $tokens, $this);
                 }
             }
         }
