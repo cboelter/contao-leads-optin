@@ -14,6 +14,7 @@
 
 namespace Boelter\LeadsOptin\Module;
 
+use Boelter\LeadsOptin\Notification\OptinMessage;
 use Contao\BackendTemplate;
 use Contao\Controller;
 use Contao\Database;
@@ -74,10 +75,11 @@ class OptIn extends Module
     protected function compile()
     {
         $token = Input::get('token');
+        $this->Template->errorMessage = $this->leadOptInErrorMessage;
 
         if (!$token)
         {
-            return null;
+            return $this->Template->isError = true;
         }
 
         $database = Database::getInstance();
@@ -85,8 +87,6 @@ class OptIn extends Module
         $lead = $database->prepare("SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ?")
             ->limit(1)
             ->execute($token, '', '0');
-
-        $this->Template->errorMessage = $this->leadOptInErrorMessage;
 
         if (0 === $lead->numRows || null === ($form = FormModel::findById($lead->form_id)))
         {
@@ -164,18 +164,18 @@ class OptIn extends Module
             {
                 if (is_array($callback))
                 {
-                    System::importStatic($callback[0])->{$callback[1]}($leadData, $tokens);
+                    System::importStatic($callback[0])->{$callback[1]}($leadData, $tokens, $this);
                 }
                 elseif (is_callable($callback))
                 {
-                    $callback($leadData, $tokens);
+                    $callback($leadData, $tokens, $this);
                 }
             }
         }
 
         if (null !== ($objNotification = Notification::findByPk($this->leadOptInSuccessNotification)))
         {
-            $objNotification->send($tokens);
+            (new OptinMessage)->send($objNotification, $tokens, $GLOBALS['TL_LANGUAGE']);
         }
 
         if (

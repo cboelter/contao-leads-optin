@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_lead']['fields']['optin_tstamp'] = [
 ];
 
 $GLOBALS['TL_DCA']['tl_lead']['fields']['optin_ip'] = [
-    'sql' => "varchar(32) NOT NULL default ''",
+    'sql' => "varchar(64) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_lead']['fields']['optin_notification_tstamp'] = [
