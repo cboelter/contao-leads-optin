@@ -175,7 +175,7 @@ class OptIn extends Module
 
         if (null !== ($objNotification = Notification::findByPk($this->leadOptInSuccessNotification)))
         {
-            (new OptinMessage)->send($objNotification, $tokens);
+            (new OptinMessage)->send($objNotification, $tokens, $GLOBALS['TL_LANGUAGE']);
         }
 
         if (

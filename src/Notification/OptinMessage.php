@@ -24,7 +24,7 @@ class OptinMessage
     /**
      * Custom send method for including file attachments to notification center
      */
-    public function send(Notification &$objNotification, array &$arrTokens, array $attachments = [], string $strLanguage = ''): array
+    public function send(Notification &$objNotification, array &$arrTokens, string $strLanguage = '', array $attachments = []): array
     {
         if (null === ($objMessages = $objNotification->getMessages()))
         {
