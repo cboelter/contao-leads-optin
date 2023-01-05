@@ -1,0 +1,17 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if($this->isError): ?>
+    <?= $this->errorMessage; ?>
+<?php endif; ?>
+
+<?php if($this->showTokenForm && !$this->isError): ?>
+    <?= $this->tokenForm; ?>
+<?php endif; ?>
+
+<?php if(!$this->isError): ?>
+    <?= $this->successMessage; ?>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

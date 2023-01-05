@@ -1,0 +1,19 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_lead_export.php" source-language="en">
+    <body>
+      <trans-unit id="tl_lead_export.optin_token">
+        <source>Opt-in token</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.optin_tstamp">
+        <source>Opt-in date</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.optin_ip">
+        <source>Opt-in IP</source>
+      </trans-unit>
+
+      <trans-unit id="tl_lead_export.type.optinCsv">
+        <source>Opt-in export CSV (.csv)</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

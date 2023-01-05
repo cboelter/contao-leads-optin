@@ -1,0 +1,38 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_form.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_form.leadOptIn.0">
+        <source>Save requests Opt-in</source>
+        <target>Anfragen speichern Opt-in</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptIn.1">
+        <source>Extends the &lt;em&gt;Save requests&lt;/em&gt; feature with an additional opt-in.</source>
+        <target>Erweitert die Funktion &lt;em&gt;Anfragen speichern&lt;/em&gt; um ein zusätzliches Opt-in.</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptInNotification.0">
+        <source>Opt-in notification</source>
+        <target>Opt-in Benachrichtigung</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptInNotification.1">
+        <source>Please select a notification that should be sent for the opt-in.</source>
+        <target>Wählen Sie eine Benachrichtigung aus, welche für den Opt-in verschickt werden soll.</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptInStoreIp.0">
+        <source>Save Opt-in IP address</source>
+        <target>Opt-in IP-Adresse speichern</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptInStoreIp.1">
+        <source>Here you can select if the IP address of the opt-in should be saved.</source>
+        <target>Hier können sie auswählen, ob die IP-Adresse des Opt-in gespeichert werden soll.</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptInTarget.0">
+        <source>Opt-in destination page</source>
+        <target>Opt-in Zielseite</target>
+      </trans-unit>
+      <trans-unit id="tl_form.leadOptInTarget.1">
+        <source>Here you can select a page that contains the opt-in module.</source>
+        <target>Wählen Sie hier eine Seite aus, auf der das Opt-in-Modul eingebunden ist.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
