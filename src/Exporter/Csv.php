@@ -37,7 +37,6 @@ class Csv extends \Leads\Exporter\Csv
     public function export($config, $ids = null)
     {
         $config->type   = 'csv';
-        $config->export = 'all';
 
         $dataCollector = $this->prepareOptInDataCollector($config, $ids);
 
