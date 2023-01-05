@@ -5,6 +5,8 @@
 [![Installations via composer total](http://img.shields.io/packagist/dt/cboelter/contao-lead-optin.svg?style=flat)](https://packagist.org/packages/cboelter/contao-lead-optin)
 
 
+Most of the work for Version 2.X was done by [Sebastian Zoglowek](https://github.com/zoglo) thanks for this!
+
 This Extension provides double opt-in functions for the [Contao-Leads](https://github.com/terminal42/contao-leads) extension.
 
 ## Setup ##
