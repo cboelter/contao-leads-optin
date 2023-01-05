@@ -20,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_lead']['list']['label']['label_callback'] = ['Boelter\Lea
 
 // Operations
 $GLOBALS['TL_DCA']['tl_lead']['list']['operations']['leadsoptin'] = [
-    'icon'  => 'member.gif',
+    'icon'  => 'member.svg',
     'button_callback' => ['Boelter\LeadsOptin\Dca\Lead', 'showOptInState']
 ];
 
