@@ -1,0 +1,63 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_module.php" source-language="en">
+    <body>
+      <trans-unit id="tl_module.leadsoptin_legend">
+        <source>Save requests Opt-in</source>
+      </trans-unit>
+      <trans-unit id="tl_module.message">
+        <source>Text</source>
+      </trans-unit>
+      <trans-unit id="tl_module.redirect">
+        <source>Forwarding</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessType.0">
+        <source>Opt-in confirmation type</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessType.1">
+        <source>Please select what type of confirmation should be used.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessMessage.0">
+        <source>Opt-in confirmation text</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessMessage.1">
+        <source>Complete this field to show the user a confirmation message.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessJumpTo.0">
+        <source>Opt-in confirmation redirect page</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessJumpTo.1">
+        <source>Please choose the redirect page to which visitors will be redirected when confirming the opt-in.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInErrorMessage.0">
+        <source>Opt-in error message</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInErrorMessage.1">
+        <source>Complete this field to show the user more information about an error.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessNotification.0">
+        <source>Opt-in success notification</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInSuccessNotification.1">
+        <source>Here you can select a notification that will be sent to the user after a successful opt-in.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptIndNeedsUserInteraction.0">
+        <source>User action required</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptIndNeedsUserInteraction.1">
+        <source>Select this field to make the user confirm the opt-in again.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInUserInteractionMessage.0">
+        <source>Confirmation message</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInUserInteractionMessage.1">
+        <source>Complete this field to show the user more information about reconfirmation of the opt-in.</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInUserInteractionSubmit.0">
+        <source>Confirmation button</source>
+      </trans-unit>
+      <trans-unit id="tl_module.leadOptInUserInteractionSubmit.1">
+        <source>Here you can specify the text for the confirmation button.</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
