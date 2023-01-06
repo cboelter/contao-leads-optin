@@ -34,7 +34,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessType'] = [
     'options'    => ['message', 'redirect'],
     'reference'  => &$GLOBALS['TL_LANG']['tl_module'],
     'eval'       => ['tl_class' => 'w50', 'submitOnChange' => true],
-    'sql'        => "varchar(8) COLLATE utf8_bin NOT NULL default 'message'",
+    'sql'        => "varchar(8) NOT NULL default 'message'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessMessage'] = [
@@ -85,5 +85,5 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInUserInteractionSubmit'] = [
     'exclude'   => true,
     'inputType' => 'text',
     'eval'      => ['tl_class' => 'w50'],
-    'sql'       => "varchar(128) COLLATE utf8_bin NOT NULL default ''",
+    'sql'       => "varchar(128) NOT NULL default ''",
 ];
