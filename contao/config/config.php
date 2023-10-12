@@ -27,7 +27,7 @@ array_insert(
 $GLOBALS['TL_HOOKS']['storeLeadsData'][] = ['Boelter\LeadsOptin\Handler\Hook', 'appendOptInData'];
 
 // Export types
-$GLOBALS['LEADS_EXPORT']['optinCsv'] = 'Boelter\LeadsOptin\Exporter\Csv';
+//$GLOBALS['LEADS_EXPORT']['optinCsv'] = 'Boelter\LeadsOptin\Exporter\Csv';
 
 // Notifications
 $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['leads_optin'] = [

@@ -14,12 +14,13 @@
 
 namespace Boelter\LeadsOptin\Handler;
 
+use Codefog\HasteBundle\StringParser;
 use Contao\Controller;
 use Contao\Database;
 use Contao\Environment;
-use Haste\Util\StringUtil;
+use Contao\PageModel;
+use Contao\System;
 use NotificationCenter\Model\Notification;
-use PageModel;
 
 /**
  * Provides several function to access leads hooks and send notifications.
@@ -28,6 +29,13 @@ use PageModel;
  */
 class Hook
 {
+    private StringParser|null $stringParser;
+
+    public function __construct()
+    {
+        $this->stringParser = System::getContainer()->get(StringParser::class);
+    }
+
     /**
      * Access the storeLeadsData hook and handle the optin.
      *
@@ -44,7 +52,7 @@ class Hook
             return;
         }
 
-        $token  = md5(uniqid(mt_rand(), true));
+        $token  = md5(uniqid((string) mt_rand(), true));
         $set    = [
             'optin_token'               => $token,
             'optin_notification_tstamp' => time()
@@ -72,7 +80,7 @@ class Hook
         }
 
         $tokens = [];
-        StringUtil::flatten($formData, 'lead', $tokens);
+        $this->stringParser->flatten($formData, 'lead', $tokens);
         unset($tokens['form']);
 
         $tokens['optin_token'] = $token;
@@ -102,7 +110,7 @@ class Hook
             $page = PageModel::findWithDetails($form['leadOptInTarget']);
         }
 
-        $url       = Environment::get('base') . Controller::generateFrontendUrl($page->row());
+        $url       = $page->getAbsoluteUrl();
         $parameter = '?token=' . $token;
 
         return $url . $parameter;

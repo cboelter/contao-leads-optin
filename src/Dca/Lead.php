@@ -14,11 +14,12 @@
 
 namespace Boelter\LeadsOptin\Dca;
 
+use Codefog\HasteBundle\StringParser;
 use Contao\Database;
 use Contao\Date;
 use Contao\Image;
 use Contao\StringUtil;
-use Haste\Util\StringUtil as HasteStringUtil;
+use Contao\System;
 
 /**
  * Provides several function for the optin functions.
@@ -27,6 +28,13 @@ use Haste\Util\StringUtil as HasteStringUtil;
  */
 class Lead
 {
+    private StringParser|null $stringParser;
+
+    public function __construct()
+    {
+        $this->stringParser = System::getContainer()->get(StringParser::class);
+    }
+
     /**
      * Extend the default label function to also replace the optin_tstamp in the backend.
      */
@@ -54,10 +62,10 @@ class Lead
 
         while ($data->next())
         {
-            HasteStringUtil::flatten(StringUtil::deserialize($data->value), $data->name, $tokens);
+            $this->stringParser->flatten(StringUtil::deserialize($data->value), $data->name, $tokens);
         }
 
-        return HasteStringUtil::recursiveReplaceTokensAndTags($form->leadLabel, $tokens);
+        return $this->stringParser->recursiveReplaceTokensAndTags($form->leadLabel, $tokens);
     }
 
     /**

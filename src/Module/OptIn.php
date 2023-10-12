@@ -15,19 +15,19 @@
 namespace Boelter\LeadsOptin\Module;
 
 use Boelter\LeadsOptin\Notification\OptinMessage;
+use Codefog\HasteBundle\Form\Form;
+use Codefog\HasteBundle\StringParser;
 use Contao\BackendTemplate;
 use Contao\Controller;
 use Contao\Database;
 use Contao\Environment;
 use Contao\FormModel;
+use Contao\Input;
 use Contao\Module;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Date;
-use Haste\Form\Form;
-use Haste\Util\StringUtil as HasteStringUtil;
-use Input;
 use NotificationCenter\Model\Notification;
 
 /**
@@ -37,6 +37,15 @@ use NotificationCenter\Model\Notification;
  */
 class OptIn extends Module
 {
+    private StringParser|null $stringParser;
+
+    public function __construct($objModule, $strColumn = 'main')
+    {
+        parent::__construct($objModule, $strColumn);
+
+        $this->stringParser = System::getContainer()->get(StringParser::class);
+    }
+
     /**
      * Template
      *
@@ -142,17 +151,17 @@ class OptIn extends Module
         $formConfig = $form->row();
         $tokens     = [];
 
-        HasteStringUtil::flatten($formConfig, 'formconfig', $tokens);
+        $this->stringParser->flatten($formConfig, 'formconfig', $tokens);
 
         $tokens['lead_created'] = Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $lead->created);
         $tokens['optin_tstamp'] =
-            ($set['optin_tstamp'] ? Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $set['optin_tstamp']) : '');
+            (!emtpy($set['optin_tstamp']) ? Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $set['optin_tstamp']) : '');
         $leadData = $database->prepare("SELECT * FROM tl_lead_data WHERE pid=?")
             ->execute($lead->id);
 
         while ($leadData->next())
         {
-            HasteStringUtil::flatten(StringUtil::deserialize($leadData->value), 'lead_' . $leadData->name, $tokens);
+            $this->stringParser->flatten(StringUtil::deserialize($leadData->value), 'lead_' . $leadData->name, $tokens);
         }
 
         $this->onOptInSuccess($leadData, $tokens);
@@ -188,7 +197,7 @@ class OptIn extends Module
         }
 
         return $this->Template->successMessage =
-            HasteStringUtil::recursiveReplaceTokensAndTags($this->leadOptInSuccessMessage, $tokens);
+            $this->stringParser->recursiveReplaceTokensAndTags($this->leadOptInSuccessMessage, $tokens);
     }
 
     // OnOpt-In success function for extending Opt-In class

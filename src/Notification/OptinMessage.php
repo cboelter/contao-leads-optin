@@ -26,7 +26,7 @@ class OptinMessage
      */
     public function send(Notification &$objNotification, array &$arrTokens, string $strLanguage = '', array $attachments = []): array
     {
-        if (null === ($objMessages = $objNotification->getMessages()))
+        if (empty($objMessages = $objNotification->getMessages()))
         {
             $this->logger->log(
                 LogLevel::ERROR,
