@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Boelter\LeadsOptin\Handler;
 
 use Boelter\LeadsOptin\Trait\TokenTrait;
+use Boelter\LeadsOptin\Util\Constants;
 use Codefog\HasteBundle\StringParser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\Form;
@@ -29,8 +30,6 @@ use NotificationCenter\Model\Notification;
 class Hook
 {
     use TokenTrait;
-
-    public static string $OPTIN_FORMFIELD_NAME = 'leads-opt-in-id';
 
     public function __construct(private readonly Connection $db, private readonly StringParser $stringParser)
     {
@@ -50,7 +49,7 @@ class Hook
         }
 
         $uniqueId = md5(uniqid((string) mt_rand(), true));
-        $submittedData[self::$OPTIN_FORMFIELD_NAME] = $uniqueId;
+        $submittedData[Constants::$OPTIN_FORMFIELD_NAME] = $uniqueId;
     }
 
     /**
@@ -68,7 +67,7 @@ class Hook
             return;
         }
 
-        if (!empty($postData[self::$OPTIN_FORMFIELD_NAME])) {
+        if (!empty($postData[Constants::$OPTIN_FORMFIELD_NAME])) {
             $arrLead = $this->db->fetchAssociative(
                 'SELECT id FROM tl_lead WHERE main_id=? and form_id=? and post_data=?',
                 [$formConfig['leadMain'] ?: $formConfig['id'], $formConfig['id'], serialize($postData)]

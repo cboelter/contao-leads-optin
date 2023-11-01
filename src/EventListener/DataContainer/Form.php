@@ -14,11 +14,9 @@ declare(strict_types=1);
 
 namespace Boelter\LeadsOptin\EventListener\DataContainer;
 
-use Boelter\LeadsOptin\Handler\Hook;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
-use Contao\FormFieldModel;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -46,38 +44,6 @@ class Form
             ->addField('leadOptIn', null, PaletteManipulator::POSITION_APPEND)
             ->applyToSubpalette('leadEnabled', 'tl_form')
         ;
-    }
-
-    #[AsCallback(table: 'tl_form', target: 'config.onsubmit')]
-    public function addFormField(DataContainer $dc): void
-    {
-        if ($dc->id && $dc->activeRecord->leadMain) {
-            return;
-        }
-
-        if ($dc->activeRecord->leadEnabled) {
-            $arrFields = FormFieldModel::findBy(
-                ['pid=?', 'type=?', 'name=?', 'invisible!=1'],
-                [$dc->id, 'hidden', Hook::$OPTIN_FORMFIELD_NAME]
-            )
-            ;
-
-            if (empty($arrFields)) {
-                $this->db->insert('tl_form_field', [
-                    'pid' => $dc->id,
-                    'type' => 'hidden',
-                    'sorting' => 1,
-                    'tstamp' => time(),
-                    'name' => Hook::$OPTIN_FORMFIELD_NAME,
-                    'leadStore' => '1',
-                    'invisible' => '',
-                ]);
-            } else {
-                $field = $arrFields->getModels()[0];
-                $field->invisible = '';
-                $field->save();
-            }
-        }
     }
 
     /**

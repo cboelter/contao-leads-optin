@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Boelter\LeadsOptin\Controller\Module;
 
 use Boelter\LeadsOptin\Trait\TokenTrait;
+use Boelter\LeadsOptin\Util\Constants;
 use Codefog\HasteBundle\Form\Form;
 use Codefog\HasteBundle\StringParser;
 use Contao\Config;
@@ -69,9 +70,10 @@ class LeadsOptInModule extends AbstractFrontendModuleController
             return $template->getResponse();
         }
 
-        $arrLead = $this->db->prepare('SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ?')
-            ->executeQuery([$token, '', '0'])
-            ->fetchAssociative()
+        $arrLead = $this->db->fetchAssociative(
+            'SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ? AND optin_notification_tstamp >= ?',
+            [$token, '', '0', time() - Constants::$TOKEN_VALID_PERIOD]
+        )
         ;
 
         if (!$arrLead || null === ($form = FormModel::findById($arrLead['form_id']))) {
@@ -162,53 +164,4 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         return $template->getResponse();
     }
-
-    /*
-     * Generate the tokens.
-     *
-     * @param array<mixed> $arrData
-     * @param array<mixed> $arrForm
-     * @param array<mixed> $arrFiles
-     * @param array<mixed> $arrLabels
-     *
-     * @return array<mixed>
-     */
-    /*private function generateTokens(array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter): array
-    {
-        $arrTokens = [];
-        $arrTokens['raw_data'] = '';
-        $arrTokens['raw_data_filled'] = '';
-
-        foreach ($arrData as $k => $v) {
-            if (Hook::$OPTIN_FORMFIELD_NAME === $k) {
-                continue;
-            }
-
-            $this->stringParser->flatten($v, 'form_'.$k, $arrTokens, $delimiter);
-            $arrTokens['formlabel_'.$k] = $arrLabels[$k] ?? ucfirst($k);
-            $arrTokens['raw_data'] .= ($arrLabels[$k] ?? ucfirst($k)).': '.(\is_array($v) ? implode(', ', $v) : $v)."\n";
-
-            if (\is_array($v) || \strlen($v)) {
-                $arrTokens['raw_data_filled'] .= ($arrLabels[$k] ?? ucfirst($k)).': '.(\is_array($v) ? implode(', ', $v) : $v)."\n";
-            }
-        }
-
-        foreach ($arrForm as $k => $v) {
-            $this->stringParser->flatten($v, 'formconfig_'.$k, $arrTokens, $delimiter);
-        }
-
-        // Administrator e-mail
-        $arrTokens['admin_email'] = $GLOBALS['TL_ADMIN_EMAIL'];
-
-        // Upload fields
-        $arrFileNames = [];
-
-        foreach ($arrFiles as $fieldName => $file) {
-            $arrTokens['form_'.$fieldName] = \NotificationCenter\Util\Form::getFileUploadPathForToken($file);
-            $arrFileNames[] = $file['name'];
-        }
-        $arrTokens['filenames'] = implode($delimiter, $arrFileNames);
-
-        return $arrTokens;
-    }*/
 }

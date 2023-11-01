@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Boelter\LeadsOptin\Trait;
 
-use Boelter\LeadsOptin\Handler\Hook;
+use Boelter\LeadsOptin\Util\Constants;
 use Codefog\HasteBundle\StringParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -29,7 +29,7 @@ trait TokenTrait
         $arrTokens['raw_data_filled'] = '';
 
         foreach ($arrData as $k => $v) {
-            if (Hook::$OPTIN_FORMFIELD_NAME === $k) {
+            if (Constants::$OPTIN_FORMFIELD_NAME === $k) {
                 continue;
             }
 
