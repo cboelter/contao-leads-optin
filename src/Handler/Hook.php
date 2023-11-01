@@ -14,13 +14,13 @@ declare(strict_types=1);
 
 namespace Boelter\LeadsOptin\Handler;
 
+use Boelter\LeadsOptin\Trait\TokenTrait;
 use Codefog\HasteBundle\StringParser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\Form;
 use Contao\PageModel;
 use Contao\Widget;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception;
 use NotificationCenter\Model\Notification;
 
 /**
@@ -28,6 +28,8 @@ use NotificationCenter\Model\Notification;
  */
 class Hook
 {
+    use TokenTrait;
+
     public static string $OPTIN_FORMFIELD_NAME = 'leads-opt-in-id';
 
     public function __construct(private readonly Connection $db, private readonly StringParser $stringParser)
@@ -56,21 +58,21 @@ class Hook
      *
      * @param array<mixed>      $postData
      * @param array<mixed>      $formConfig
-     * @param array<mixed>|null $files
-     * @param array<mixed>      $labels
+     * @param array<mixed>|null $arrFiles
+     * @param array<mixed>      $arrLabels
      */
     #[AsHook('processFormData')]
-    public function appendOptInData(array $postData, array $formConfig, array|null $files, array $labels, Form $form): void
+    public function appendOptInData(array $postData, array $formConfig, array|null $arrFiles, array $arrLabels, Form $form): void
     {
         if (!$formConfig['leadEnabled'] || !isset($formConfig['leadOptIn']) || !$formConfig['leadOptIn']) {
             return;
         }
 
         if (!empty($postData[self::$OPTIN_FORMFIELD_NAME])) {
-            $arrLead = $this->db->prepare('SELECT id FROM tl_lead WHERE main_id=? and form_id=? and post_data=?')
-                ->executeQuery([$formConfig['leadMain'] ?: $formConfig['id'], $formConfig['id'], serialize($postData)])
-                ->fetchAssociative()
-            ;
+            $arrLead = $this->db->fetchAssociative(
+                'SELECT id FROM tl_lead WHERE main_id=? and form_id=? and post_data=?',
+                [$formConfig['leadMain'] ?: $formConfig['id'], $formConfig['id'], serialize($postData)]
+            );
 
             if (empty($arrLead)) {
                 return;
@@ -82,30 +84,26 @@ class Hook
             $set = [
                 'optin_token' => $token,
                 'optin_notification_tstamp' => time(),
-                'optin_files' => !empty($files) ? serialize($files) : null,
-                'optin_labels' => serialize($labels),
+                'optin_files' => !empty($arrFiles) ? serialize($arrFiles) : null,
+                'optin_labels' => serialize($arrLabels),
             ];
 
             $this->db->update('tl_lead', $set, ['id' => $lead]);
 
-            $formData = [];
-            $fields = $this->getFormFields((int) $formConfig['id'], (int) $formConfig['leadMain']);
-
-            foreach ($fields as $field) {
-                if (\array_key_exists($field['name'], $postData) && $postData[$field['name']]) {
-                    $formData[$field['name']] = $postData[$field['name']];
-                }
-            }
-
-            $tokens = [];
-            $this->stringParser->flatten($formData, 'lead', $tokens);
-            unset($tokens['form']);
+            $tokens = $this->generateTokens(
+                $this->db,
+                $this->stringParser,
+                $postData,
+                $formConfig,
+                $arrFiles ?: [],
+                $arrLabels
+            );
 
             $tokens['optin_token'] = $token;
             $tokens['optin_url'] = $this->generateOptInUrl($token, $formConfig);
 
             $objNotification = Notification::findByPk($formConfig['leadOptInNotification']);
-            $objNotification?->send($tokens); // @phpstan-ignore-line
+            $objNotification?->send($tokens, $GLOBALS['TL_LANGUAGE']); // @phpstan-ignore-line
         }
     }
 
@@ -127,49 +125,5 @@ class Hook
         $parameter = '?token='.$token;
 
         return $url.$parameter;
-    }
-
-    /**
-     * @throws Exception
-     *
-     * @return array<mixed>
-     */
-    private function getFormFields(int $formId, int $mainId): array
-    {
-        if ($mainId > 0) {
-            return $this->db->fetchAllAssociative(
-                <<<'SQL'
-                        SELECT
-                            main_field.*,
-                            form_field.id AS field_id,
-                            form_field.name AS postName
-                        FROM tl_form_field form_field
-                            LEFT JOIN tl_form_field main_field ON form_field.leadStore=main_field.id
-                        WHERE
-                            form_field.pid=?
-                          AND main_field.pid=?
-                          AND form_field.leadStore>0
-                          AND main_field.leadStore='1'
-                          AND form_field.invisible=''
-                        ORDER BY main_field.sorting;
-                    SQL,
-                [$formId, $mainId]
-            );
-        }
-
-        return $this->db->fetchAllAssociative(
-            <<<'SQL'
-                    SELECT
-                        *,
-                        id AS field_id,
-                        name AS postName
-                    FROM tl_form_field
-                    WHERE pid=?
-                      AND leadStore='1'
-                      AND invisible=''
-                    ORDER BY sorting
-                SQL,
-            [$formId]
-        );
     }
 }

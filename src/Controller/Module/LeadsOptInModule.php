@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Boelter\LeadsOptin\Controller\Module;
 
-use Boelter\LeadsOptin\Handler\Hook;
+use Boelter\LeadsOptin\Trait\TokenTrait;
 use Codefog\HasteBundle\Form\Form;
 use Codefog\HasteBundle\StringParser;
 use Contao\Config;
@@ -50,6 +50,8 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsFrontendModule(type: LeadsOptInModule::TYPE, category: 'leads', template: 'mod_leads_optin')]
 class LeadsOptInModule extends AbstractFrontendModuleController
 {
+    use TokenTrait;
+
     public const TYPE = 'leadsoptin';
 
     public function __construct(private readonly Connection $db, private readonly StringParser $stringParser)
@@ -121,11 +123,12 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         $formConfig = $form->row();
         $tokens = $this->generateTokens(
+            $this->db,
+            $this->stringParser,
             StringUtil::deserialize($arrLead['post_data'], true),
             $formConfig,
             StringUtil::deserialize($arrLead['optin_files'], true),
-            StringUtil::deserialize($arrLead['optin_labels'], true),
-            ','
+            StringUtil::deserialize($arrLead['optin_labels'], true)
         )
         ;
 
@@ -160,7 +163,7 @@ class LeadsOptInModule extends AbstractFrontendModuleController
         return $template->getResponse();
     }
 
-    /**
+    /*
      * Generate the tokens.
      *
      * @param array<mixed> $arrData
@@ -170,7 +173,7 @@ class LeadsOptInModule extends AbstractFrontendModuleController
      *
      * @return array<mixed>
      */
-    private function generateTokens(array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter): array
+    /*private function generateTokens(array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter): array
     {
         $arrTokens = [];
         $arrTokens['raw_data'] = '';
@@ -207,5 +210,5 @@ class LeadsOptInModule extends AbstractFrontendModuleController
         $arrTokens['filenames'] = implode($delimiter, $arrFileNames);
 
         return $arrTokens;
-    }
+    }*/
 }
