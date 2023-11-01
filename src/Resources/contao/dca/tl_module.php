@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
  * PHP version ^7.4 || ^8.0
  *
- * @package    LeadsOptin
- * @author     Christopher Bölter <kontakt@boelter.eu>
  * @copyright  Christopher Bölter 2017
  * @license    LGPL.
  * @filesource
@@ -25,65 +25,64 @@ $GLOBALS['TL_DCA']['tl_module']['subpalettes']['leadOptIndNeedsUserInteraction']
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['leadOptInSuccessType_message'] = 'leadOptInSuccessMessage';
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['leadOptInSuccessType_redirect'] = 'leadOptInSuccessJumpTo';
 
-/**
+/*
  * Fields
  */
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessType'] = [
-    'exclude'    => true,
-    'inputType'  => 'select',
-    'options'    => ['message', 'redirect'],
-    'reference'  => &$GLOBALS['TL_LANG']['tl_module'],
-    'eval'       => ['tl_class' => 'w50', 'submitOnChange' => true],
-    'sql'        => "varchar(8) NOT NULL default 'message'",
+    'exclude' => true,
+    'inputType' => 'select',
+    'options' => ['message', 'redirect'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_module'],
+    'eval' => ['tl_class' => 'w50', 'submitOnChange' => true],
+    'sql' => "varchar(8) NOT NULL default 'message'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessMessage'] = [
-    'exclude'   => true,
+    'exclude' => true,
     'inputType' => 'textarea',
-    'eval'      => ['tl_class' => 'long', 'rte' => 'tinyMCE'],
-    'sql'       => "text NULL",
+    'eval' => ['tl_class' => 'long', 'rte' => 'tinyMCE'],
+    'sql' => 'text NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessJumpTo'] = [
-    'exclude'    => true,
-    'inputType'  => 'pageTree',
+    'exclude' => true,
+    'inputType' => 'pageTree',
     'foreignKey' => 'tl_page.title',
-    'eval'       => ['fieldType' => 'radio', 'tl_class' => 'clr'],
-    'sql'        => "int(10) unsigned NOT NULL default 0",
+    'eval' => ['fieldType' => 'radio', 'tl_class' => 'clr'],
+    'sql' => 'int(10) unsigned NOT NULL default 0',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInErrorMessage'] = [
-    'exclude'   => true,
+    'exclude' => true,
     'inputType' => 'textarea',
-    'eval'      => ['tl_class' => 'clr long', 'rte' => 'tinyMCE'],
-    'sql'       => "text NULL",
+    'eval' => ['tl_class' => 'clr long', 'rte' => 'tinyMCE'],
+    'sql' => 'text NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInSuccessNotification'] = [
-    'exclude'          => true,
-    'inputType'        => 'select',
-    'options_callback' => ['Boelter\LeadsOptin\Dca\Module', 'getNotifications'],
-    'eval'             => ['tl_class' => 'w50 m12', 'includeBlankOption' => true, 'mandatory' => false],
-    'sql'              => "int(10) unsigned NOT NULL default '0'",
+    'exclude' => true,
+    'inputType' => 'select',
+    'eval' => ['tl_class' => 'w50 m12', 'includeBlankOption' => true, 'mandatory' => false],
+    'sql' => "int(10) unsigned NOT NULL default '0'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptIndNeedsUserInteraction'] = [
-    'exclude'   => true,
+    'exclude' => true,
     'inputType' => 'checkbox',
-    'eval'      => ['tl_class' => 'w50 clr', 'submitOnChange' => true],
-    'sql'       => "char(1) NOT NULL default ''",
+    'eval' => ['tl_class' => 'w50 clr', 'submitOnChange' => true],
+    'sql' => "char(1) NOT NULL default ''",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInUserInteractionMessage'] = [
-    'exclude'   => true,
+    'exclude' => true,
     'inputType' => 'textarea',
-    'eval'      => ['tl_class' => 'long', 'rte' => 'tinyMCE'],
-    'sql'       => "text NULL",
+    'eval' => ['tl_class' => 'long', 'rte' => 'tinyMCE'],
+    'sql' => 'text NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['leadOptInUserInteractionSubmit'] = [
-    'exclude'   => true,
+    'exclude' => true,
     'inputType' => 'text',
-    'eval'      => ['tl_class' => 'w50'],
-    'sql'       => "varchar(128) NOT NULL default ''",
+    'eval' => ['tl_class' => 'w50'],
+    'sql' => "varchar(128) NOT NULL default ''",
 ];

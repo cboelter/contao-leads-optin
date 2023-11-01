@@ -7,7 +7,7 @@
     "contao leads optin",
     "optin"
   ],
-  "type": "contao-module",
+  "type": "contao-bundle",
   "homepage": "https://boelter.eu",
   "license": "LGPL-3.0+",
   "authors": [
@@ -30,29 +30,21 @@
     "ext-mbstring": "*"
   },
   "require-dev": {
+    "bamarni/composer-bin-plugin": "^1.5",
     "contao/manager-plugin": "^2.3.1"
   },
   "conflict": {
-    "contao/core": "*",
     "contao/manager-plugin": "<2.0 || >=3.0"
   },
   "autoload": {
     "psr-4": {
       "Boelter\\LeadsOptin\\": "src/"
-    },
-    "classmap": [
-      "contao/"
-    ],
-    "exclude-from-classmap": [
-      "contao/config/",
-      "contao/dca/",
-      "contao/languages/",
-      "contao/templates/"
-    ]
+    }
   },
   "extra": {
-    "branch-alias": {
-      "dev-develop": "1.4.x-dev"
+    "bamarni-bin": {
+      "bin-links": false,
+      "target-directory": "tools"
     },
     "contao-manager-plugin": "Boelter\\LeadsOptin\\ContaoManager\\Plugin"
   },
@@ -61,7 +53,8 @@
       "contao-components/installer": true,
       "php-http/discovery": true,
       "contao-community-alliance/composer-plugin": true,
-      "contao/manager-plugin": true
+      "contao/manager-plugin": true,
+      "bamarni/composer-bin-plugin": true
     }
   },
   "scripts": {
@@ -69,7 +62,7 @@
       "@ecs",
       "@phpstan"
     ],
-    "ecs": "@php tools/ecs/vendor/bin/ecs check src contao --config ecs.php --fix --ansi",
+    "ecs": "@php tools/ecs/vendor/bin/ecs check src --config ecs.php --fix --ansi",
     "phpstan": "@php tools/phpstan/vendor/bin/phpstan analyze --ansi"
   }
 }

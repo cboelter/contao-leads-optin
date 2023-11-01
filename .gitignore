@@ -14,3 +14,5 @@ nbproject/
 /vendor/
 composer.phar
 composer.lock
+
+/tools/

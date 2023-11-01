@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
  * PHP version ^7.4 || ^8.0
  *
- * @package    LeadsOptin
- * @author     Christopher Bölter <kontakt@boelter.eu>
  * @copyright  Christopher Bölter 2017
  * @license    LGPL.
  * @filesource
@@ -16,12 +16,11 @@
 $GLOBALS['TL_DCA']['tl_lead']['config']['sql']['keys']['optin_token'] = 'index';
 
 // Callbacks
-$GLOBALS['TL_DCA']['tl_lead']['list']['label']['label_callback'] = ['Boelter\LeadsOptin\Dca\Lead', 'getLabel'];
+//$GLOBALS['TL_DCA']['tl_lead']['list']['label']['label_callback'] = [Lead::class, 'getLabel'];
 
 // Operations
 $GLOBALS['TL_DCA']['tl_lead']['list']['operations']['leadsoptin'] = [
-    'icon'  => 'member.svg',
-    'button_callback' => ['Boelter\LeadsOptin\Dca\Lead', 'showOptInState']
+    'icon' => 'member.svg',
 ];
 
 // Fields
@@ -31,6 +30,14 @@ $GLOBALS['TL_DCA']['tl_lead']['fields']['optin_token'] = [
 
 $GLOBALS['TL_DCA']['tl_lead']['fields']['optin_tstamp'] = [
     'sql' => "int(10) unsigned NOT NULL default '0'",
+];
+
+$GLOBALS['TL_DCA']['tl_lead']['fields']['optin_files'] = [
+    'sql' => 'text NULL',
+];
+
+$GLOBALS['TL_DCA']['tl_lead']['fields']['optin_labels'] = [
+    'sql' => 'text NULL',
 ];
 
 $GLOBALS['TL_DCA']['tl_lead']['fields']['optin_ip'] = [

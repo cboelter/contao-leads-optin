@@ -1,0 +1,10 @@
+services:
+   _defaults:
+      autoconfigure: true
+      autowire: true
+      public: false
+
+   Boelter\LeadsOptin\Handler\Hook:
+      arguments:
+         - '@database_connection'
+         - '@Codefog\HasteBundle\StringParser'

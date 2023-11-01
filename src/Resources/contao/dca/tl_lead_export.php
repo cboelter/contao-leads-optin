@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
  * PHP version ^7.4 || ^8.0
  *
- * @package    LeadsOptin
- * @author     Christopher Bölter <kontakt@boelter.eu>
  * @copyright  Christopher Bölter 2017
  * @license    LGPL.
  * @filesource

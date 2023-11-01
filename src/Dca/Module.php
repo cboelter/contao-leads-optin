@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * The leads optin extension allows you to store leads with double optin function.
  *
  * PHP version ^7.4 || ^8.0
  *
- * @package    LeadsOptin
- * @author     Christopher Bölter <kontakt@boelter.eu>
  * @copyright  Christopher Bölter 2017
  * @license    LGPL.
  * @filesource
@@ -14,29 +14,37 @@
 
 namespace Boelter\LeadsOptin\Dca;
 
-use Contao\Database;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
+use Contao\DataContainer;
+use Doctrine\DBAL\Connection;
 
 /**
- * Provides several function for the module datacontainer
- *
- * @package Boelter\LeadsOptin\Dca
+ * Provides several function for the module datacontainer.
  */
 class Module
 {
+    public function __construct(private readonly Connection $db)
+    {
+    }
+
     /**
-     * Get all notifications for the optin success notification.
+     * Get all notifications for the optin.
+     *
+     * @return array<mixed>
      */
-    public function getNotifications(): array
+    #[AsCallback(table: 'tl_module', target: 'fields.leadOptInSuccessNotification.options')]
+    public function getNotifications(DataContainer $dc): array
     {
         $notificationOptions = [];
-        $database            = Database::getInstance();
-        $notifications       = $database->execute(
+        $notifications = $this->db->prepare(
             "SELECT id,title FROM tl_nc_notification WHERE type='leads_optin_success_notification' ORDER BY title"
-        );
+        )
+            ->executeQuery()
+            ->fetchAllAssociative()
+        ;
 
-        while ($notifications->next())
-        {
-            $notificationOptions[$notifications->id] = $notifications->title;
+        foreach ($notifications as $notification) {
+            $notificationOptions[$notification['id']] = $notification['title'];
         }
 
         return $notificationOptions;

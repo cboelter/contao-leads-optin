@@ -1,0 +1,15 @@
+services:
+   _defaults:
+      autoconfigure: true
+      autowire: true
+      public: false
+
+   Boelter\LeadsOptin\Dca\Lead: ~
+
+   Boelter\LeadsOptin\Dca\Form:
+      arguments:
+         - '@database_connection'
+
+   Boelter\LeadsOptin\Dca\Module:
+      arguments:
+         - '@database_connection'
