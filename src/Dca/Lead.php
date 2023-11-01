@@ -17,6 +17,7 @@ namespace Boelter\LeadsOptin\Dca;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
 use Contao\Date;
+use Contao\FormModel;
 use Contao\Image;
 
 /**
@@ -34,6 +35,12 @@ class Lead
     #[AsCallback(table: 'tl_lead', target: 'list.operations.leadsoptin.button')]
     public function showOptInState(array $row, string|null $href, string $label, string $title, string|null $icon, string $attributes, string $table, array $rootRecordIds, array|null $childRecordIds, bool $circularReference, string|null $previous, string|null $next, DataContainer $dc): string
     {
+        $objForm = FormModel::findByPk($row['form_id']);
+
+        if (empty($objForm) || !isset($objForm->leadEnabled) || !$objForm->leadEnabled || !isset($objForm->leadOptIn) || !$objForm->leadOptIn) {
+            return '';
+        }
+
         $iconPath = 'system/themes/flexible/icons/';
 
         if (!$row['optin_tstamp']) {
