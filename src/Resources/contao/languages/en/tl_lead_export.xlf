@@ -12,7 +12,22 @@
       </trans-unit>
 
       <trans-unit id="tl_lead_export.type.optinCsv">
-        <source>Opt-in export CSV (.csv)</source>
+        <source>Opt-in CSV (.csv)</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinXlsx">
+        <source>Opt-in Microsoft Excel (.xlsx)</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinXls">
+        <source>Opt-in Old Microsoft Excel (.xls)</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinExcel_csv">
+        <source>Opt-in CSV (Microsoft Excel-compatible)</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinOds">
+        <source>Opt-in OpenDocument Spreadsheet</source>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinHtml">
+        <source>Opt-in HTML</source>
       </trans-unit>
     </body>
   </file>

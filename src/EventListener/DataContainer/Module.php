@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @filesource
  */
 
-namespace Boelter\LeadsOptin\Dca;
+namespace Boelter\LeadsOptin\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;

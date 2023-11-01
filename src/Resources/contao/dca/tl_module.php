@@ -12,8 +12,10 @@ declare(strict_types=1);
  * @filesource
  */
 
+use Boelter\LeadsOptin\Controller\Module\LeadsOptInModule;
+
 // Palettes
-$GLOBALS['TL_DCA']['tl_module']['palettes']['leadsoptin'] =
+$GLOBALS['TL_DCA']['tl_module']['palettes'][LeadsOptInModule::TYPE] =
     '{title_legend},name,headline,type;{leadsoptin_legend},leadOptInSuccessType,leadOptInErrorMessage,leadOptInSuccessNotification,leadOptIndNeedsUserInteraction;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'leadOptInSuccessType';

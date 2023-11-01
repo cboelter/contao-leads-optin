@@ -15,8 +15,28 @@
       </trans-unit>
 
       <trans-unit id="tl_lead_export.type.optinCsv">
-        <source>Opt-in export CSV (.csv)</source>
-        <target>Opt-in-Export CSV (.csv)</target>
+        <source>Opt-in CSV (.csv)</source>
+        <target>Opt-in CSV (.csv)</target>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinXlsx">
+        <source>Opt-in Microsoft Excel (.xlsx)</source>
+        <target>Opt-in Microsoft Excel (.xlsx)</target>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinXls">
+        <source>Opt-in Old Microsoft Excel (.xls)</source>
+        <target>Opt-in Altes Microsoft Excel (.xls)</target>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinExcel_csv">
+        <source>Opt-in export CSV (Microsoft Excel-compatible)</source>
+        <target>Opt-in CSV (Microsoft Excel-kompatibel)</target>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinOds">
+        <source>Opt-in OpenDocument Spreadsheet</source>
+        <target>Opt-in OpenDocument Tabellendokument</target>
+      </trans-unit>
+      <trans-unit id="tl_lead_export.type.optinHtml">
+        <source>Opt-in HTML</source>
+        <target>Opt-in HTML</target>
       </trans-unit>
     </body>
   </file>

@@ -12,7 +12,7 @@ declare(strict_types=1);
  * @filesource
  */
 
-namespace Boelter\LeadsOptin\Dca;
+namespace Boelter\LeadsOptin\EventListener\DataContainer;
 
 use Boelter\LeadsOptin\Handler\Hook;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;

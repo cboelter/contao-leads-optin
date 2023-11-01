@@ -1,0 +1,16 @@
+#tl_buttons .leads_export__optinCsv,
+#tl_buttons .leads_export__optinExcel_csv {
+    background-image: url(iconCSV.svg) !important;
+}
+#tl_buttons .leads_export__optinXlsx {
+    background-image: url(iconXLSX.svg) !important;
+}
+#tl_buttons .leads_export__optinXls {
+    background-image: url(iconXLS.svg) !important;
+}
+#tl_buttons .leads_export__optinHtml {
+    background-image: url(iconHTML.svg) !important;
+}
+#tl_buttons .leads_export__optinOds {
+    background-image: url(iconODS.svg) !important;
+}

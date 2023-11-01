@@ -1,0 +1,10 @@
+services:
+   _defaults:
+      autoconfigure: true
+      autowire: true
+      public: false
+
+   Boelter\LeadsOptin\Controller\Module\LeadsOptInModule:
+      arguments:
+         - '@database_connection'
+         - '@Codefog\HasteBundle\StringParser'

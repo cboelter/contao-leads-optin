@@ -12,23 +12,10 @@ declare(strict_types=1);
  * @filesource
  */
 
-use Boelter\LeadsOptin\Module\OptIn;
-use Contao\ArrayUtil;
-
-// Frontend modules
-ArrayUtil::arrayInsert(
-    $GLOBALS['FE_MOD']['leads'],
-    (is_array($GLOBALS['FE_MOD']['leads']) ? count($GLOBALS['FE_MOD']['leads']) - 1 : 0),
-    [
-        'leadsoptin' => OptIn::class,
-    ]
-);
-
-// Hooks
-//$GLOBALS['TL_HOOKS']['storeLeadsData'][] = ['Boelter\LeadsOptin\Handler\Hook', 'appendOptInData'];
-
-// Export types
-//$GLOBALS['LEADS_EXPORT']['optinCsv'] = 'Boelter\LeadsOptin\Exporter\Csv';
+// Backend styles
+if (TL_MODE === 'BE') {
+    $GLOBALS['TL_CSS']['leads_optin'] = 'bundles/contaoleadsoptin/css/leads-optin.css|static';
+}
 
 // Notifications
 $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['leads_optin'] = [

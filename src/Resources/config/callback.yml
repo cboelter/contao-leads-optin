@@ -4,12 +4,12 @@ services:
       autowire: true
       public: false
 
-   Boelter\LeadsOptin\Dca\Lead: ~
+   Boelter\LeadsOptin\EventListener\DataContainer\Lead: ~
 
-   Boelter\LeadsOptin\Dca\Form:
+   Boelter\LeadsOptin\EventListener\DataContainer\Form:
       arguments:
          - '@database_connection'
 
-   Boelter\LeadsOptin\Dca\Module:
+   Boelter\LeadsOptin\EventListener\DataContainer\Module:
       arguments:
          - '@database_connection'

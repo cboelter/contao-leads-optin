@@ -1,0 +1,16 @@
+services:
+   _defaults:
+      autoconfigure: true
+      autowire: true
+      public: false
+      bind:
+         $formatters: '@terminal42_leads.formatters'
+         $connection: '@database_connection'
+         $translator: '@translator'
+         $parser: '@Codefog\HasteBundle\StringParser'
+         $expressionLanguage: '@terminal42_leads.expression_language'
+         $projectDir: '%kernel.project_dir%'
+
+   Boelter\LeadsOptin\Exporter\CsvExporter: ~
+
+   Boelter\LeadsOptin\Exporter\PhpSpreadsheetExporter: ~
