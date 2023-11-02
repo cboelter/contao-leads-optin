@@ -22,7 +22,15 @@ trait TokenTrait
      *
      * @return array<mixed>
      */
-    protected function generateTokens(Connection $db, StringParser $stringParser, array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter = ','): array
+    protected function generateTokens(
+        Connection $db,
+        StringParser $stringParser,
+        array $arrData,
+        array $arrForm,
+        array $arrFiles,
+        array $arrLabels,
+        string $delimiter = ', '
+    ): array
     {
         $arrTokens = [];
         $arrTokens['raw_data'] = '';
