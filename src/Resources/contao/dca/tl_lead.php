@@ -14,9 +14,7 @@ declare(strict_types=1);
 
 // Keys
 $GLOBALS['TL_DCA']['tl_lead']['config']['sql']['keys']['optin_token'] = 'index';
-
-// Callbacks
-//$GLOBALS['TL_DCA']['tl_lead']['list']['label']['label_callback'] = [Lead::class, 'getLabel'];
+$GLOBALS['TL_DCA']['tl_lead']['config']['sql']['keys']['post_data'] = 'index';
 
 // Operations
 $GLOBALS['TL_DCA']['tl_lead']['list']['operations']['leadsoptin'] = [
