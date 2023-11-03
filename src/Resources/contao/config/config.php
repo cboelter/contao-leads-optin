@@ -65,6 +65,8 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['leads_optin'] = [
             'raw_data_filled',
             'filenames',
             'admin_email',
+            'optin_tstamp',
+            'optin_ip',
         ],
         'email_html' => [
             'lead_*',
@@ -75,6 +77,8 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['leads_optin'] = [
             'raw_data_filled',
             'filenames',
             'admin_email',
+            'optin_tstamp',
+            'optin_ip',
         ],
         'email_sender_name' => ['admin_email', 'lead_*', 'form_*', 'formconfig_*'],
         'email_sender_address' => ['admin_email', 'lead_*', 'form_*', 'formconfig_*'],

@@ -136,6 +136,9 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         $tokens['lead_created'] = Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $arrLead['created']);
         $tokens['optin_tstamp'] = Date::parse(Config::get('datimFormat'), $set['optin_tstamp']);
+        if ($form->leadOptInStoreIp) {
+            $tokens['optin_ip'] = $set['optin_ip'];
+        }
 
         // HOOK: add custom logic
         if (isset($GLOBALS['TL_HOOKS']['onLeadOptinSuccess']) && \is_array($GLOBALS['TL_HOOKS']['onLeadOptinSuccess'])) {
