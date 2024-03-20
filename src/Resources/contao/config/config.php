@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-/**
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
+
+/*
  * The leads optin extension allows you to store leads with double optin function.
  *
  * PHP version ^7.4 || ^8.0
@@ -13,7 +16,10 @@ declare(strict_types=1);
  */
 
 // Backend styles
-if (TL_MODE === 'BE') {
+if (
+    System::getContainer()->get('contao.routing.scope_matcher')
+    ->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create(''))
+) {
     $GLOBALS['TL_CSS']['leads_optin'] = 'bundles/contaoleadsoptin/css/leads-optin.css|static';
 }
 
