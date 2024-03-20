@@ -22,7 +22,8 @@ use Contao\Form;
 use Contao\PageModel;
 use Contao\Widget;
 use Doctrine\DBAL\Connection;
-use NotificationCenter\Model\Notification;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
+use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 /**
  * Provides several function to access leads hooks and send notifications.
@@ -31,7 +32,7 @@ class Hook
 {
     use TokenTrait;
 
-    public function __construct(private readonly Connection $db, private readonly StringParser $stringParser)
+    public function __construct(private readonly NotificationCenter $notificationCenter, private readonly FileUploadNormalizer $fileUploadNormalizer, private readonly Connection $db, private readonly StringParser $stringParser)
     {
     }
 
@@ -90,6 +91,8 @@ class Hook
             $this->db->update('tl_lead', $set, ['id' => $lead]);
 
             $tokens = $this->generateTokens(
+                $this->notificationCenter,
+                $this->fileUploadNormalizer,
                 $this->db,
                 $this->stringParser,
                 $postData,
@@ -101,8 +104,7 @@ class Hook
             $tokens['optin_token'] = $token;
             $tokens['optin_url'] = $this->generateOptInUrl($token, $formConfig);
 
-            $objNotification = Notification::findByPk($formConfig['leadOptInNotification']);
-            $objNotification?->send($tokens, $GLOBALS['TL_LANGUAGE']); // @phpstan-ignore-line
+            $this->notificationCenter->sendNotification((int) $formConfig['leadOptInNotification'], $tokens, $GLOBALS['TL_LANGUAGE']);
         }
     }
 

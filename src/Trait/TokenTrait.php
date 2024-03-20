@@ -8,7 +8,9 @@ use Boelter\LeadsOptin\Util\Constants;
 use Codefog\HasteBundle\StringParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use NotificationCenter\Util\Form;
+use Terminal42\NotificationCenterBundle\BulkyItem\FileItem;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
+use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 trait TokenTrait
 {
@@ -22,15 +24,7 @@ trait TokenTrait
      *
      * @return array<mixed>
      */
-    protected function generateTokens(
-        Connection $db,
-        StringParser $stringParser,
-        array $arrData,
-        array $arrForm,
-        array $arrFiles,
-        array $arrLabels,
-        string $delimiter = ', '
-    ): array
+    protected function generateTokens(NotificationCenter $notificationCenter, FileUploadNormalizer $fileUploadNormalizer, Connection $db, StringParser $stringParser, array $arrData, array $arrForm, array $arrFiles, array $arrLabels, string $delimiter = ', '): array
     {
         $arrTokens = [];
         $arrTokens['raw_data'] = '';
@@ -65,11 +59,23 @@ trait TokenTrait
 
         // Upload fields
         $arrFileNames = [];
+        $bulkyItemVouchers = [];
 
-        foreach ($arrFiles as $fieldName => $file) {
-            $arrTokens['form_'.$fieldName] = Form::getFileUploadPathForToken($file);
-            $arrFileNames[] = $file['name'];
+        foreach ($fileUploadNormalizer->normalize($arrFiles) as $k => $files) {
+            $vouchers = [];
+
+            foreach ($files as $file) {
+                $fileItem = \is_resource($file['stream']) ?
+                    FileItem::fromStream($file['stream'], $file['name'], $file['type'], $file['size']) :
+                    FileItem::fromPath($file['tmp_name'], $file['name'], $file['type'], $file['size']);
+                $vouchers[] = $notificationCenter->getBulkyGoodsStorage()->store($fileItem);
+
+                $arrFileNames[] = $file['name'];
+            }
+            $tokens['form_'.$k] = implode(',', $vouchers);
+            $bulkyItemVouchers = array_merge($bulkyItemVouchers, $vouchers);
         }
+
         $arrTokens['filenames'] = implode($delimiter, $arrFileNames);
 
         return $arrTokens;

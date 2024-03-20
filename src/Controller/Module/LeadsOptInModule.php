@@ -32,9 +32,10 @@ use Contao\StringUtil;
 use Contao\System;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
-use NotificationCenter\Model\Notification;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
+use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 /**
  * Provides the frontend module to handle the optin process.
@@ -55,11 +56,11 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
     public const TYPE = 'leadsoptin';
 
-    public function __construct(private readonly Connection $db, private readonly StringParser $stringParser)
+    public function __construct(private readonly NotificationCenter $notificationCenter, private readonly FileUploadNormalizer $fileUploadNormalizer, private readonly Connection $db, private readonly StringParser $stringParser)
     {
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response|null
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $token = Input::get('token');
         $template->errorMessage = $model->leadOptInErrorMessage;
@@ -125,6 +126,8 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         $formConfig = $form->row();
         $tokens = $this->generateTokens(
+            $this->notificationCenter,
+            $this->fileUploadNormalizer,
             $this->db,
             $this->stringParser,
             StringUtil::deserialize($arrLead['post_data'], true),
@@ -136,6 +139,7 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         $tokens['lead_created'] = Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $arrLead['created']);
         $tokens['optin_tstamp'] = Date::parse(Config::get('datimFormat'), $set['optin_tstamp']);
+
         if ($form->leadOptInStoreIp) {
             $tokens['optin_ip'] = $set['optin_ip'];
         }
@@ -151,8 +155,8 @@ class LeadsOptInModule extends AbstractFrontendModuleController
             }
         }
 
-        if (null !== ($objNotification = Notification::findByPk($model->leadOptInSuccessNotification))) {
-            $objNotification->send($tokens, $GLOBALS['TL_LANGUAGE']);
+        if (null !== $model->leadOptInSuccessNotification) {
+            $this->notificationCenter->sendNotification((int) $model->leadOptInSuccessNotification, $tokens, $GLOBALS['TL_LANGUAGE']);
         }
 
         if (

@@ -6,5 +6,7 @@ services:
 
    Boelter\LeadsOptin\Handler\Hook:
       arguments:
+         - '@Terminal42\NotificationCenterBundle\NotificationCenter'
+         - '@Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer'
          - '@database_connection'
          - '@Codefog\HasteBundle\StringParser'
