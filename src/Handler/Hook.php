@@ -104,7 +104,14 @@ class Hook
             $tokens['optin_token'] = $token;
             $tokens['optin_url'] = $this->generateOptInUrl($token, $formConfig);
 
-            $this->notificationCenter->sendNotification((int) $formConfig['leadOptInNotification'], $tokens, $GLOBALS['TL_LANGUAGE']);
+            $bulkyItemsStamp = $this->processBulkyItems($this->notificationCenter, $this->fileUploadNormalizer, $tokens, $arrFiles);
+            $stamps = $this->notificationCenter->createBasicStampsForNotification((int) $formConfig['leadOptInNotification'], $tokens, $GLOBALS['TL_LANGUAGE']);
+
+            if (null !== $bulkyItemsStamp) {
+                $stamps = $stamps->with($bulkyItemsStamp);
+            }
+
+            $this->notificationCenter->sendNotificationWithStamps((int) $formConfig['leadOptInNotification'], $stamps);
         }
     }
 

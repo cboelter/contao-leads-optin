@@ -1,0 +1,30 @@
+<?xml version="1.0" ?><xliff version="1.1">
+  <file datatype="php" original="contao/languages/en/tl_nc_notification.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="nc_tokens.leads.lead_*">
+        <source>All the lead fields.</source>
+        <target>All the lead fields.</target>
+      </trans-unit>
+      <trans-unit id="nc_tokens.optin.optin_url">
+        <source>Opt-in URL</source>
+        <target>Opt-in URL</target>
+      </trans-unit>
+      <trans-unit id="nc_tokens.optin.optin_token">
+        <source>Opt-in Token</source>
+        <target>Opt-in Token</target>
+      </trans-unit>
+      <trans-unit id="nc_tokens.optin.optin_tstamp">
+        <source>Opt-in Timestamp</source>
+        <target>Opt-in Zeitpunkt</target>
+      </trans-unit>
+      <trans-unit id="nc_tokens.optin.optin_ip">
+        <source>Opt-in IP</source>
+        <target>Opt-in IP</target>
+      </trans-unit>
+      <trans-unit id="nc_tokens.file.filenames">
+        <source>All names of submitted files</source>
+        <target>All names of submitted files</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

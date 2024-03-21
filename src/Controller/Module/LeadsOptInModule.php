@@ -156,7 +156,14 @@ class LeadsOptInModule extends AbstractFrontendModuleController
         }
 
         if (null !== $model->leadOptInSuccessNotification) {
-            $this->notificationCenter->sendNotification((int) $model->leadOptInSuccessNotification, $tokens, $GLOBALS['TL_LANGUAGE']);
+            $bulkyItemsStamp = $this->processBulkyItems($this->notificationCenter, $this->fileUploadNormalizer, $tokens, StringUtil::deserialize($arrLead['optin_files'], true));
+            $stamps = $this->notificationCenter->createBasicStampsForNotification((int) $model->leadOptInSuccessNotification, $tokens, $GLOBALS['TL_LANGUAGE']);
+
+            if (null !== $bulkyItemsStamp) {
+                $stamps = $stamps->with($bulkyItemsStamp);
+            }
+
+            $this->notificationCenter->sendNotificationWithStamps((int) $model->leadOptInSuccessNotification, $stamps);
         }
 
         if (

@@ -24,5 +24,6 @@ class ContaoLeadsOptinExtension extends Extension
         $loader->load('callback.yml');
         $loader->load('exporter.yml');
         $loader->load('cron.yml');
+        $loader->load('notification_types.yml');
     }
 }

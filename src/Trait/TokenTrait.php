@@ -10,6 +10,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Terminal42\NotificationCenterBundle\BulkyItem\FileItem;
 use Terminal42\NotificationCenterBundle\NotificationCenter;
+use Terminal42\NotificationCenterBundle\Parcel\Stamp\BulkyItemsStamp;
 use Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer;
 
 trait TokenTrait
@@ -59,6 +60,26 @@ trait TokenTrait
 
         // Upload fields
         $arrFileNames = [];
+
+        foreach ($fileUploadNormalizer->normalize($arrFiles) as $files) {
+            foreach ($files as $file) {
+                $arrFileNames[] = $file['name'];
+            }
+        }
+
+        $arrTokens['filenames'] = implode($delimiter, $arrFileNames);
+
+        return $arrTokens;
+    }
+
+    /**
+     * @param array<mixed> $arrTokens
+     * @param array<mixed> $arrFiles
+     *
+     * @return BulkyItemsStamp
+     */
+    private function processBulkyItems(NotificationCenter $notificationCenter, FileUploadNormalizer $fileUploadNormalizer, array &$arrTokens, array $arrFiles): BulkyItemsStamp|null
+    {
         $bulkyItemVouchers = [];
 
         foreach ($fileUploadNormalizer->normalize($arrFiles) as $k => $files) {
@@ -69,16 +90,16 @@ trait TokenTrait
                     FileItem::fromStream($file['stream'], $file['name'], $file['type'], $file['size']) :
                     FileItem::fromPath($file['tmp_name'], $file['name'], $file['type'], $file['size']);
                 $vouchers[] = $notificationCenter->getBulkyGoodsStorage()->store($fileItem);
-
-                $arrFileNames[] = $file['name'];
             }
-            $tokens['form_'.$k] = implode(',', $vouchers);
+            $arrTokens['form_'.$k] = implode(',', $vouchers);
             $bulkyItemVouchers = array_merge($bulkyItemVouchers, $vouchers);
         }
 
-        $arrTokens['filenames'] = implode($delimiter, $arrFileNames);
+        if (!empty($bulkyItemVouchers)) {
+            return new BulkyItemsStamp($bulkyItemVouchers);
+        }
 
-        return $arrTokens;
+        return null;
     }
 
     /**
