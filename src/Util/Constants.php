@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
+ * This file is part of cgoit\contao-leads-optin-bundle for Contao Open Source CMS.
  *
  * @copyright  Copyright (c) 2024, cgoIT
  * @author     cgoIT <https://cgo-it.de>
