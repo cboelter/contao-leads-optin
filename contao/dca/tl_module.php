@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-/**
- * The leads optin extension allows you to store leads with double optin function.
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
  *
- * PHP version ^7.4 || ^8.0
- *
- * @copyright  Christopher Bölter 2017
- * @license    LGPL.
- * @filesource
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
  */
 
-use Boelter\LeadsOptin\Controller\Module\LeadsOptInModule;
+use Cgoit\LeadsOptinBundle\Controller\Module\LeadsOptInModule;
 
 // Palettes
 $GLOBALS['TL_DCA']['tl_module']['palettes'][LeadsOptInModule::TYPE] =

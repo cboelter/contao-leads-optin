@@ -11,11 +11,6 @@ declare(strict_types=1);
  * @license    LGPL-3.0-or-later
  */
 
-namespace Cgoit\LeadsOptinBundle\Util;
-
-class Constants
-{
-    public static string $OPTIN_FORMFIELD_NAME = 'leads-opt-in-id';
-
-    public static int $TOKEN_VALID_PERIOD = 3 * 24 * 60 * 60;
-}
+// Palettes
+$GLOBALS['TL_DCA']['tl_lead_export']['palettes']['optinCsv'] =
+    '{name_legend},name,type,filename;{config_legend},headerFields,export;{date_legend:hide},lastRun,skipLastRun';

@@ -2,9 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Boelter\LeadsOptin\Cron;
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
+ *
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
+ */
 
-use Boelter\LeadsOptin\Util\Constants;
+namespace Cgoit\LeadsOptinBundle\Cron;
+
+use Cgoit\LeadsOptinBundle\Util\Constants;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCronJob;
 use Contao\FilesModel;
 use Contao\StringUtil;
@@ -30,9 +39,8 @@ class PurgeCron
     {
         $leads = $this->connection->fetchAllAssociative(
             'SELECT * FROM tl_lead WHERE optin_tstamp = 0 AND optin_notification_tstamp > 0 AND optin_notification_tstamp < ?',
-            [time() - Constants::$TOKEN_VALID_PERIOD]
-        )
-        ;
+            [time() - Constants::$TOKEN_VALID_PERIOD],
+        );
 
         $allIds = [];
         $allUploads = [];
@@ -41,7 +49,7 @@ class PurgeCron
         foreach ($leads as $lead) {
             $form = $this->connection->fetchAssociative(
                 'SELECT * FROM tl_form WHERE id=?',
-                [$lead['main_id']]
+                [$lead['main_id']],
             );
 
             if (empty($form)) {
@@ -80,9 +88,9 @@ class PurgeCron
     /**
      * @param array<mixed> $leadIds
      *
-     * @throws Exception
-     *
      * @return array<mixed>
+     *
+     * @throws Exception
      */
     private function getUploads(array $leadIds): array
     {

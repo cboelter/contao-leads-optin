@@ -11,11 +11,10 @@ declare(strict_types=1);
  * @license    LGPL-3.0-or-later
  */
 
-namespace Cgoit\LeadsOptinBundle\Util;
+namespace Cgoit\LeadsOptinBundle;
 
-class Constants
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+class CgoitLeadsOptinBundle extends Bundle
 {
-    public static string $OPTIN_FORMFIELD_NAME = 'leads-opt-in-id';
-
-    public static int $TOKEN_VALID_PERIOD = 3 * 24 * 60 * 60;
 }

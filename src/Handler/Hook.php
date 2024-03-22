@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-/**
- * The leads optin extension allows you to store leads with double optin function.
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
  *
- * PHP version ^7.4 || ^8.0
- *
- * @copyright  Christopher Bölter 2017
- * @license    LGPL.
- * @filesource
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
  */
 
-namespace Boelter\LeadsOptin\Handler;
+namespace Cgoit\LeadsOptinBundle\Handler;
 
-use Boelter\LeadsOptin\Trait\TokenTrait;
-use Boelter\LeadsOptin\Util\Constants;
+use Cgoit\LeadsOptinBundle\Trait\TokenTrait;
+use Cgoit\LeadsOptinBundle\Util\Constants;
 use Codefog\HasteBundle\StringParser;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\Form;
@@ -32,15 +31,18 @@ class Hook
 {
     use TokenTrait;
 
-    public function __construct(private readonly NotificationCenter $notificationCenter, private readonly FileUploadNormalizer $fileUploadNormalizer, private readonly Connection $db, private readonly StringParser $stringParser)
-    {
+    public function __construct(
+        private readonly NotificationCenter $notificationCenter,
+        private readonly FileUploadNormalizer $fileUploadNormalizer,
+        private readonly Connection $db,
+        private readonly StringParser $stringParser,
+    ) {
     }
 
     /**
      * @param array<mixed>  $submittedData
      * @param array<mixed>  $labels
      * @param array<Widget> $fields
-     * @param Form          $form
      */
     #[AsHook('prepareFormData')]
     public function markPostData(array &$submittedData, array $labels, array $fields, Form $form): void
@@ -71,7 +73,7 @@ class Hook
         if (!empty($postData[Constants::$OPTIN_FORMFIELD_NAME])) {
             $arrLead = $this->db->fetchAssociative(
                 'SELECT id FROM tl_lead WHERE main_id=? and form_id=? and post_data=?',
-                [$formConfig['leadMain'] ?: $formConfig['id'], $formConfig['id'], serialize($postData)]
+                [$formConfig['leadMain'] ?: $formConfig['id'], $formConfig['id'], serialize($postData)],
             );
 
             if (empty($arrLead)) {
@@ -98,7 +100,7 @@ class Hook
                 $postData,
                 $formConfig,
                 $arrFiles ?: [],
-                $arrLabels
+                $arrLabels,
             );
 
             $tokens['optin_token'] = $token;
@@ -118,7 +120,6 @@ class Hook
     /**
      * Generate the optin target url and pass it back.
      *
-     * @param $token
      * @param array<mixed> $formConfig
      */
     private function generateOptInUrl(string $token, array $formConfig): string

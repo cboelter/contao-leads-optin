@@ -2,20 +2,19 @@
 
 declare(strict_types=1);
 
-/**
- * The leads optin extension allows you to store leads with double optin function.
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
  *
- * PHP version ^7.4 || ^8.0
- *
- * @copyright  Christopher Bölter 2017
- * @license    LGPL.
- * @filesource
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
  */
 
-namespace Boelter\LeadsOptin\Controller\Module;
+namespace Cgoit\LeadsOptinBundle\Controller\Module;
 
-use Boelter\LeadsOptin\Trait\TokenTrait;
-use Boelter\LeadsOptin\Util\Constants;
+use Cgoit\LeadsOptinBundle\Trait\TokenTrait;
+use Cgoit\LeadsOptinBundle\Util\Constants;
 use Codefog\HasteBundle\Form\Form;
 use Codefog\HasteBundle\StringParser;
 use Contao\Config;
@@ -56,8 +55,12 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
     public const TYPE = 'leadsoptin';
 
-    public function __construct(private readonly NotificationCenter $notificationCenter, private readonly FileUploadNormalizer $fileUploadNormalizer, private readonly Connection $db, private readonly StringParser $stringParser)
-    {
+    public function __construct(
+        private readonly NotificationCenter $notificationCenter,
+        private readonly FileUploadNormalizer $fileUploadNormalizer,
+        private readonly Connection $db,
+        private readonly StringParser $stringParser,
+    ) {
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
@@ -73,9 +76,8 @@ class LeadsOptInModule extends AbstractFrontendModuleController
 
         $arrLead = $this->db->fetchAssociative(
             'SELECT * FROM tl_lead Where optin_token = ? AND optin_token <> ? AND optin_tstamp = ? AND optin_notification_tstamp >= ?',
-            [$token, '', '0', time() - Constants::$TOKEN_VALID_PERIOD]
-        )
-        ;
+            [$token, '', '0', time() - Constants::$TOKEN_VALID_PERIOD],
+        );
 
         if (!$arrLead || null === ($form = FormModel::findById($arrLead['form_id']))) {
             $template->isError = true;
@@ -133,9 +135,8 @@ class LeadsOptInModule extends AbstractFrontendModuleController
             StringUtil::deserialize($arrLead['post_data'], true),
             $formConfig,
             StringUtil::deserialize($arrLead['optin_files'], true),
-            StringUtil::deserialize($arrLead['optin_labels'], true)
-        )
-        ;
+            StringUtil::deserialize($arrLead['optin_labels'], true),
+        );
 
         $tokens['lead_created'] = Date::parse($GLOBALS['TL_CONFIG']['datimFormat'], $arrLead['created']);
         $tokens['optin_tstamp'] = Date::parse(Config::get('datimFormat'), $set['optin_tstamp']);
@@ -167,9 +168,9 @@ class LeadsOptInModule extends AbstractFrontendModuleController
         }
 
         if (
-            'redirect' === $model->leadOptInSuccessType &&
-            0 !== $model->leadOptInSuccessJumpTo &&
-            ($page = PageModel::findWithDetails($model->leadOptInSuccessJumpTo)) !== null
+            'redirect' === $model->leadOptInSuccessType
+            && 0 !== $model->leadOptInSuccessJumpTo
+            && ($page = PageModel::findWithDetails($model->leadOptInSuccessJumpTo)) !== null
         ) {
             Controller::redirect($page->getFrontendUrl());
         }

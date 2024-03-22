@@ -1,0 +1,21 @@
+on:
+    push:
+        branches:
+            - main
+name: release-please
+permissions:
+    contents: write
+    pull-requests: write
+jobs:
+    release-please:
+        runs-on: ubuntu-latest
+        steps:
+            - id: release-pr
+              uses: google-github-actions/release-please-action@v4
+              with:
+                  release-type: php
+                  package-name: cgoit/contao-leads-optin
+                  default-branch: main
+                  token: ${{secrets.GITHUB_TOKEN}}
+                  bump-minor-pre-major: true
+                  bump-patch-for-minor-pre-major: true

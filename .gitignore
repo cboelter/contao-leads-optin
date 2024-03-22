@@ -15,4 +15,4 @@ nbproject/
 composer.phar
 composer.lock
 
-/tools/
+.phpunit.result.cache

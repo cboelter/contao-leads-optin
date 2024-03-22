@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-/**
- * The leads optin extension allows you to store leads with double optin function.
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
  *
- * PHP version ^7.4 || ^8.0
- *
- * @copyright  Christopher Bölter 2017
- * @license    LGPL.
- * @filesource
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
  */
 
-namespace Boelter\LeadsOptin\EventListener\DataContainer;
+namespace Cgoit\LeadsOptinBundle\EventListener\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
@@ -37,7 +36,7 @@ class Module
     {
         $notificationOptions = [];
         $notifications = $this->db->prepare(
-            "SELECT id,title FROM tl_nc_notification WHERE type='leads_optin_success_notification' ORDER BY title"
+            "SELECT id,title FROM tl_nc_notification WHERE type='leads_optin_success_notification' ORDER BY title",
         )
             ->executeQuery()
             ->fetchAllAssociative()

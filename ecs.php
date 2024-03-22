@@ -6,12 +6,16 @@ use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return static function (ECSConfig $ecsConfig): void {
-    $ecsConfig->sets([__DIR__.'/tools/ecs/vendor/contao/easy-coding-standard/config/contao.php']);
+    $year = date('Y');
+    $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, [
+        'header' => <<<EOF
+This file is part of cgoit\\contao-leads-optin for Contao Open Source CMS.
 
-    if (PHP_VERSION_ID < 80000) {
-        $ecsConfig->ruleWithConfiguration(\PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer::class, ['elements' => ['arrays'], 'after_heredoc' => true]);
-        $ecsConfig->skip([\PhpCsFixer\Fixer\PhpUnit\PhpUnitExpectationFixer::class]); // see https://github.com/symplify/symplify/issues/3130
-    }
-
-    // Adjust the configuration according to your needs.
+@copyright  Copyright (c) $year, cgoIT
+@author     cgoIT <https://cgo-it.de>
+@author     Christopher Bölter
+@license    LGPL-3.0-or-later
+EOF
+        ,
+    ]);
 };

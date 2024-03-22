@@ -2,9 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Boelter\LeadsOptin\Trait;
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
+ *
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
+ */
 
-use Boelter\LeadsOptin\Util\Constants;
+namespace Cgoit\LeadsOptinBundle\Trait;
+
+use Cgoit\LeadsOptinBundle\Util\Constants;
 use Codefog\HasteBundle\StringParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -75,8 +84,6 @@ trait TokenTrait
     /**
      * @param array<mixed> $arrTokens
      * @param array<mixed> $arrFiles
-     *
-     * @return BulkyItemsStamp
      */
     private function processBulkyItems(NotificationCenter $notificationCenter, FileUploadNormalizer $fileUploadNormalizer, array &$arrTokens, array $arrFiles): BulkyItemsStamp|null
     {
@@ -106,9 +113,9 @@ trait TokenTrait
      * @param array<mixed> $formConfig
      * @param array<mixed> $postData
      *
-     * @throws Exception
-     *
      * @return array<mixed>
+     *
+     * @throws Exception
      */
     private function getLeadData(Connection $db, array $formConfig, array $postData): array
     {
@@ -125,9 +132,9 @@ trait TokenTrait
     }
 
     /**
-     * @throws Exception
-     *
      * @return array<mixed>
+     *
+     * @throws Exception
      */
     private function getFormFields(Connection $db, int $formId, int $mainId): array
     {
@@ -148,7 +155,7 @@ trait TokenTrait
                           AND form_field.invisible=''
                         ORDER BY main_field.sorting;
                     SQL,
-                [$formId, $mainId]
+                [$formId, $mainId],
             );
         }
 
@@ -164,7 +171,7 @@ trait TokenTrait
                       AND invisible=''
                     ORDER BY sorting
                 SQL,
-            [$formId]
+            [$formId],
         );
     }
 }

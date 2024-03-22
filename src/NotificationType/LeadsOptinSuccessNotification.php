@@ -2,7 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Boelter\LeadsOptin\NotificationType;
+/*
+ * This file is part of cgoit\contao-leads-optin for Contao Open Source CMS.
+ *
+ * @copyright  Copyright (c) 2024, cgoIT
+ * @author     cgoIT <https://cgo-it.de>
+ * @author     Christopher Bölter
+ * @license    LGPL-3.0-or-later
+ */
+
+namespace Cgoit\LeadsOptinBundle\NotificationType;
 
 use Terminal42\NotificationCenterBundle\NotificationType\NotificationTypeInterface;
 use Terminal42\NotificationCenterBundle\Token\Definition\AnythingTokenDefinition;
@@ -23,9 +32,6 @@ class LeadsOptinSuccessNotification implements NotificationTypeInterface
         return self::NAME;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getTokenDefinitions(): array
     {
         return [
