@@ -11,6 +11,6 @@ services:
          $expressionLanguage: '@terminal42_leads.expression_language'
          $projectDir: '%kernel.project_dir%'
 
-   Boelter\LeadsOptin\Exporter\CsvExporter: ~
+   Cgoit\LeadsOptinBundle\Exporter\CsvExporter: ~
 
-   Boelter\LeadsOptin\Exporter\PhpSpreadsheetExporter: ~
+   Cgoit\LeadsOptinBundle\Exporter\PhpSpreadsheetExporter: ~

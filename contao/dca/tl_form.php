@@ -15,8 +15,6 @@ declare(strict_types=1);
 $GLOBALS['TL_DCA']['tl_form']['palettes']['__selector__'][] = 'leadOptIn';
 $GLOBALS['TL_DCA']['tl_form']['subpalettes']['leadOptIn'] = 'leadOptInNotification,leadOptInStoreIp,leadOptInTarget';
 
-// Callbacks GLOBALS['TL_DCA']['tl_form']['config']['onload_callback'][] =
-// [Form::class, 'updatePalette']; Fields
 $GLOBALS['TL_DCA']['tl_form']['fields']['leadOptIn'] = [
     'exclude' => true,
     'inputType' => 'checkbox',

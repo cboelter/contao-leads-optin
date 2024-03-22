@@ -4,7 +4,7 @@ services:
       autowire: true
       public: false
 
-   Boelter\LeadsOptin\Handler\Hook:
+   Cgoit\LeadsOptinBundle\Handler\Hook:
       arguments:
          - '@Terminal42\NotificationCenterBundle\NotificationCenter'
          - '@Terminal42\NotificationCenterBundle\Util\FileUploadNormalizer'
